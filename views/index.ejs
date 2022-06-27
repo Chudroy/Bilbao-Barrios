@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>
+    Welcome to <%=title%>
+  </p>
+  <a href="post/new">New Post</a>
+
+  <% for( let index=posts.length-1; index>= 0 ; index--) { %>
+    <ul>
+      <li>
+        <a href="post/<%=posts[index]._id%>">
+          <%=posts[index].title%>
+        </a>
+      </li>
+    </ul>
+    <% } %>
+</body>
+
 </html>
