@@ -23,7 +23,8 @@ const seedDB = async () => {
         const p = new Post({
             title: `${fake_title.first_word[random_first_word]} ${fake_title.second_word[random_second_word]}`,
             author: fake_users[random_username].username,
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacus ligula, facilisis nec augue id, vulputate placerat turpis. Nullam auctor ante quam, eget efficitur leo tempus id. Suspendisse et venenatis sapien, eget faucibus leo. Nunc posuere tincidunt tellus eget dapibus. Vivamus nec ornare turpis. Maecenas maximus dapibus metus eget dictum. Aliquam erat volutpat. In eu dui ultricies magna congue venenatis. Vivamus tempor efficitur libero a facilisis. Curabitur id mi vulputate, pretium tellus at, lacinia nisl. Etiam pharetra facilisis orci eu venenatis. Curabitur et neque euismod, sollicitudin eros in, auctor nisi. Mauris sit amet egestas magna. Mauris nibh sem, aliquet vel lectus nec, faucibus condimentum mi. Fusce sed lectus libero."
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacus ligula, facilisis nec augue id, vulputate placerat turpis. Nullam auctor ante quam, eget efficitur leo tempus id. Suspendisse et venenatis sapien, eget faucibus leo. Nunc posuere tincidunt tellus eget dapibus. Vivamus nec ornare turpis. Maecenas maximus dapibus metus eget dictum. Aliquam erat volutpat. In eu dui ultricies magna congue venenatis. Vivamus tempor efficitur libero a facilisis. Curabitur id mi vulputate, pretium tellus at, lacinia nisl. Etiam pharetra facilisis orci eu venenatis. Curabitur et neque euismod, sollicitudin eros in, auctor nisi. Mauris sit amet egestas magna. Mauris nibh sem, aliquet vel lectus nec, faucibus condimentum mi. Fusce sed lectus libero.",
+            image: "https://source.unsplash.com/random"
         })
 
         await p.save()
@@ -31,8 +32,7 @@ const seedDB = async () => {
 }
 
 const test = async () => {
-    console.log(fake_title.first_word, fake_title.second_word)
-    console.log(fake_users.length)
+    const test_url = "https://api.unsplash.com/photos/random?client_id=Nrv2sLhUUhAwKJeQQO5_wUayO2cHGFhxRJpsWyIshDU&collections=99144643"
 }
 
 // test().then(() => {

@@ -1,4 +1,5 @@
 var express = require('express');
+const { Mongoose } = require('mongoose');
 const app = require('../app');
 var router = express.Router();
 const Post = require("../models/post")
@@ -29,6 +30,12 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
     const editedPost = await Post.findByIdAndUpdate(id, { ...req.body.post }, { useFindAndModify: false })
     res.redirect(`/post/${editedPost._id}`)
+})
+
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params
+    const deletedPost = await Post.findByIdAndDelete(id)
+    res.redirect("/")
 })
 
 module.exports = router;
