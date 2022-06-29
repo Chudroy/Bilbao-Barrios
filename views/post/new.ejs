@@ -2,7 +2,7 @@
 <div class="row">
   <h1 class="text-center">New Post</h1>
   <div class="col-6 offset-3">
-    <form action="/post" method="POST">
+    <form action="/post" method="POST" novalidate class="validated-form">
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -12,6 +12,7 @@
           id="title"
           required
         />
+        <div class="invalid-feedback">Please write a title.</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="">Post</label>
@@ -22,6 +23,7 @@
           id="post"
           required
         ></textarea>
+        <div class="invalid-feedback">Please write a post.</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="image">Image URL</label>
@@ -33,3 +35,29 @@
     </form>
   </div>
 </div>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".validated-form");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Post = require("../models/post");
-const AppError = require("../AppError");
+const AppError = require("../utils/expressError");
 const app = require("../app");
 
 const verifyPassword = (req, res, next) => {

@@ -7,7 +7,6 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const AppError = require("./AppError");
 
 mongoose
   .connect("mongodb://localhost:27017/BilbaoBarrios", {

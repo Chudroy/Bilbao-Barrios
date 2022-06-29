@@ -5,6 +5,7 @@ const ReplySchema = new Schema({
   author: {
     type: String,
     required: true,
+    minLength: 1,
   },
   date: {
     type: String,
@@ -13,6 +14,7 @@ const ReplySchema = new Schema({
   content: {
     type: String,
     required: true,
+    minLength: 1,
   },
 });
 
@@ -24,10 +26,12 @@ const PostSchema = new Schema({
   title: {
     type: String,
     required: true,
+    minLength: [3, "Title is too short"],
   },
   author: {
     type: String,
     required: true,
+    minLength: 1,
   },
   date: {
     type: Date,
@@ -36,6 +40,7 @@ const PostSchema = new Schema({
   content: {
     type: String,
     required: true,
+    minLength: 1,
   },
   image: String,
   replies: [ReplySchema],

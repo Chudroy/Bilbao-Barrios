@@ -1,41 +1,59 @@
-var express = require('express');
-const { Mongoose } = require('mongoose');
-const app = require('../app');
+var express = require("express");
+const mongoose = require("mongoose");
+const app = require("../app");
 var router = express.Router();
-const Post = require("../models/post")
+const Post = require("../models/post");
+const catchAsync = require("../utils/catchAsync");
 
-router.get('/new', async function (req, res, next) {
-    res.render('post/new');
+router.get("/new", async function (req, res, next) {
+  res.render("post/new");
 });
 
-router.post("/", async (req, res) => {
-    const newPost = new Post(req.body.post)
-    await newPost.save()
-    res.redirect(`/post/${newPost._id}`)
-})
+router.post(
+  "/",
+  catchAsync(async function (req, res, next) {
+    let newPost = new Post(req.body.post);
+    newPost.date = Date.now();
+    await newPost.save();
+    res.redirect(`/post/${newPost._id}`);
+  })
+);
 
-router.get('/:id', async function (req, res, next) {
-    const { id } = req.params
-    const post = await Post.findById(id)
-    res.render('post/show', { post });
+router.get("/:id", async function (req, res, next) {
+  const { id } = req.params;
+  const post = await Post.findById(id);
+  res.render("post/show", { post });
 });
 
-router.get('/:id/edit', async function (req, res, next) {
-    const { id } = req.params
-    const post = await Post.findById(id)
-    res.render('post/edit', { post });
-});
+router.get(
+  "/:id/edit",
+  catchAsync(async function (req, res, next) {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    res.render("post/edit", { post });
+  })
+);
 
-router.put('/:id', async (req, res) => {
-    const { id } = req.params
-    const editedPost = await Post.findByIdAndUpdate(id, { ...req.body.post }, { useFindAndModify: false })
-    res.redirect(`/post/${editedPost._id}`)
-})
+router.put(
+  "/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const editedPost = await Post.findByIdAndUpdate(
+      id,
+      { ...req.body.post },
+      { useFindAndModify: false }
+    );
+    res.redirect(`/post/${editedPost._id}`);
+  })
+);
 
-router.delete("/:id", async (req, res) => {
-    const { id } = req.params
-    const deletedPost = await Post.findByIdAndDelete(id)
-    res.redirect("/")
-})
+router.delete(
+  "/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const deletedPost = await Post.findByIdAndDelete(id);
+    res.redirect("/");
+  })
+);
 
 module.exports = router;
