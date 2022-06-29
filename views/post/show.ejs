@@ -1,16 +1,26 @@
 <% layout("layouts/boilerplate") %>
-    <h1>
-        <%=post.title%>
-    </h1>
-    <img src="<%=post.image%>" alt="">
-    <p>
-        <%=post.content%>
-    </p>
-    <form action="/post/<%=post._id%>?_method=DELETE" method="POST">
-        <button type="submit">Delete</button>
-    </form>
-    <footer>
-        <a href="/post/<%=post._id%>/edit">Edit</a>
-        <br>
-        <a href="/">Back to Index</a>
-    </footer>
+<div>
+  <a href="/">Back to Index</a>
+</div>
+<div class="col-6 offset-3 text-center">
+  <h1><%=post.title%></h1>
+</div>
+
+<div class="col-6 offset-3 text-center mb-3">
+  <div class="card mb-3">
+    <img src="<%=post.image%>" class="card-img-top" />
+    <div class="card-body">
+      <p class="card-text"><%=post.content%></p>
+    </div>
+    <div class="card-body">
+      <a class="card-link btn btn-info" href="/post/<%=post._id%>/edit">Edit</a>
+      <form
+        class="d-inline"
+        action="/post/<%=post._id%>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger" type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>

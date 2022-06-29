@@ -7,6 +7,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const AppError = require("./AppError");
 
 mongoose
   .connect("mongodb://localhost:27017/BilbaoBarrios", {
@@ -23,7 +24,8 @@ mongoose
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const post = require("./routes/post");
+const postRouter = require("./routes/post");
+const secretRouter = require("./routes/secret");
 
 const app = express();
 
@@ -41,7 +43,8 @@ app.use(methodOverride("_method"));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/post", post);
+app.use("/post", postRouter);
+app.use("/secret", secretRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

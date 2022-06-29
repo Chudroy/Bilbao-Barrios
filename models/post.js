@@ -1,20 +1,44 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema({
-  title: String,
-  author: String,
-  date: Date,
-  content: String,
+const ReplySchema = new Schema({
+  author: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+});
+
+ReplySchema.add({
+  replies: [ReplySchema],
 });
 
 const PostSchema = new Schema({
-  title: String,
-  author: String,
-  date: Date,
-  content: String,
+  title: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
   image: String,
-  comments: [CommentSchema],
+  replies: [ReplySchema],
   // TODO: add images
 });
 
