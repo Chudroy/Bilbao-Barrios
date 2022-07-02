@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Post = require("../models/post");
-const AppError = require("../utils/expressError");
+const ExpressError = require("../utils/expressError");
 const app = require("../app");
 
 const verifyPassword = (req, res, next) => {
@@ -9,7 +9,7 @@ const verifyPassword = (req, res, next) => {
   if (password === "123") {
     next();
   } else {
-    throw new AppError("invalid password", 401);
+    throw new ExpressError("invalid password", 401);
   }
 };
 

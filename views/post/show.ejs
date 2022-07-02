@@ -1,26 +1,109 @@
 <% layout("layouts/boilerplate") %>
-<div>
+<div class="mb-3">
   <a href="/">Back to Index</a>
 </div>
-<div class="col-6 offset-3 text-center">
-  <h1><%=post.title%></h1>
-</div>
 
-<div class="col-6 offset-3 text-center mb-3">
+<!-- Original Post -->
+<div class="col-12 mb-3">
   <div class="card mb-3">
-    <img src="<%=post.image%>" class="card-img-top" />
+    <div class="">
+      <p class="card-text text-secondary ms-2">Posted by <%=post.author%></p>
+    </div>
+    <div class="mb-3">
+      <h1 class="ms-3"><%=post.title%></h1>
+    </div>
+    <div class="text-center">
+      <img
+        src="<%=post.image%>"
+        class="ms-3 me-3 img-fluid"
+        style="max-height: 600px; width: auto"
+      />
+    </div>
+
     <div class="card-body">
       <p class="card-text"><%=post.content%></p>
     </div>
-    <div class="card-body">
-      <a class="card-link btn btn-info" href="/post/<%=post._id%>/edit">Edit</a>
-      <form
-        class="d-inline"
-        action="/post/<%=post._id%>?_method=DELETE"
-        method="POST"
-      >
-        <button class="btn btn-danger" type="submit">Delete</button>
-      </form>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="col">2 days ago</div>
+        <!-- Buttons -->
+        <div class="col text-end">
+          <a class="card-link btn btn-info" href="/post/<%=post._id%>/edit"
+            >Edit</a
+          >
+          <form
+            class="d-inline"
+            action="/post/<%=post._id%>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+        </div>
+        <!-- End Buttons -->
+      </div>
     </div>
   </div>
 </div>
+<!-- End Original Post -->
+
+<!-- Reply Form -->
+<div class="mb-3">
+  <form action="/post/<%=post._id%>" method="POST">
+    <label for="reply" class="form-label text-center">Post a Reply</label>
+    <textarea
+      class="form-control mb-3"
+      id="reply"
+      rows="3"
+      name="reply[content]"
+      placeholder="What do you think?"
+    ></textarea>
+    <div class="text-end">
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+<!-- End Reply Form -->
+
+<h2 class="mb-3">Replies</h2>
+
+<!-- Replies -->
+<% for( let index = 0; index < post.replies.length; index++ ) { %>
+<div class="col-12 mb-3">
+  <div class="card mb-3">
+    <p class="text-secondary mb-0 ms-2">
+      Posted by <%=post.replies[index].author%>
+    </p>
+    <div class="card-body">
+      <p class="card-text"><%=post.replies[index].content%></p>
+    </div>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="col">
+          <p class="text-secondary">2 days ago</p>
+        </div>
+        <!-- Buttons -->
+        <div class="col text-end">
+          <a
+            class="card-link btn btn-info"
+            href="/post/replies/<%=post.replies[index]._id%>/edit"
+            >Edit</a
+          >
+          <form
+            class="d-inline"
+            action="/post/replies/<%=post.replies[index]._id%>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+        </div>
+        <!-- End Buttons -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<% } %>
+
+<!-- End Replies -->

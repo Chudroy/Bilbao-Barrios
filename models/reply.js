@@ -1,19 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-    minlength: [3, "title is too short"],
-  },
+const ReplySchema = new Schema({
   author: {
     type: String,
     required: true,
     minlength: 1,
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   content: {
@@ -21,9 +16,11 @@ const PostSchema = new Schema({
     required: true,
     minlength: 1,
   },
-  image: String,
-  replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
-  likes: Number,
+  originalPost: { type: Schema.Types.ObjectId, ref: "Post" },
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+ReplySchema.add({
+  replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
+});
+
+module.exports = mongoose.model("Reply", ReplySchema);

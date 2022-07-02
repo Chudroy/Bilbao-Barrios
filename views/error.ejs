@@ -1,3 +1,11 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<% layout("layouts/boilerplate") %>
+<div class="ro">
+  <div class="col-12">
+    <div class="alert alert-danger" role="alert">
+      <h1><%= message %></h1>
+      <h2><%= error.status %></h2>
+      <h3><%= %></h3>
+      <pre><%= error.stack %></pre>
+    </div>
+  </div>
+</div>
