@@ -21,11 +21,13 @@ mongoose
     console.log(err);
   });
 
+// routers setup
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const postRouter = require("./routes/post");
 const secretRouter = require("./routes/secret");
 
+// app initialization
 const app = express();
 
 // view engine setup
@@ -33,12 +35,15 @@ app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// middleware setup
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
+
+// middleware routers setup
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

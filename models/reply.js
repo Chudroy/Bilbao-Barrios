@@ -17,6 +17,7 @@ const ReplySchema = new Schema({
     minlength: 1,
   },
   originalPost: { type: Schema.Types.ObjectId, ref: "Post" },
+  likes: Number,
 });
 
 ReplySchema.add({

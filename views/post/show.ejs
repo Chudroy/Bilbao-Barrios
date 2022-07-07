@@ -6,21 +6,26 @@
 <!-- Original Post -->
 <div class="col-12 mb-3">
   <div class="card mb-3">
-    <div class="">
-      <p class="card-text text-secondary ms-2">Posted by <%=post.author%></p>
-    </div>
-    <div class="mb-3">
-      <h1 class="ms-3"><%=post.title%></h1>
-    </div>
-    <div class="text-center">
-      <img
-        src="<%=post.image%>"
-        class="ms-3 me-3 img-fluid"
-        style="max-height: 600px; width: auto"
-      />
+    <div class="card-head">
+      <div class="">
+        <p class="card-text text-secondary ms-2">Posted by <%=post.author%></p>
+      </div>
+      <div class="mb-3">
+        <h1 class="ms-3"><%=post.title%></h1>
+      </div>
     </div>
 
     <div class="card-body">
+      <div
+        class="text-center mb-3"
+        style="background-color: rgb(250, 249, 247)"
+      >
+        <img
+          src="<%=post.image%>"
+          class="img-fluid"
+          style="max-height: 600px; width: auto"
+        />
+      </div>
       <p class="card-text"><%=post.content%></p>
     </div>
 
@@ -49,7 +54,12 @@
 
 <!-- Reply Form -->
 <div class="mb-3">
-  <form action="/post/<%=post._id%>" method="POST">
+  <form
+    action="/post/<%=post._id%>/replies"
+    method="POST"
+    novalidate
+    class="validated-form"
+  >
     <label for="reply" class="form-label text-center">Post a Reply</label>
     <textarea
       class="form-control mb-3"
@@ -57,7 +67,9 @@
       rows="3"
       name="reply[content]"
       placeholder="What do you think?"
+      required
     ></textarea>
+    <div class="invalid-feedback">Can't submit an empty reply!</div>
     <div class="text-end">
       <button class="btn btn-primary" type="submit">Submit</button>
     </div>
@@ -92,7 +104,7 @@
           >
           <form
             class="d-inline"
-            action="/post/replies/<%=post.replies[index]._id%>?_method=DELETE"
+            action="/post/<%=post._id%>/replies/<%=post.replies[index]._id%>?_method=DELETE"
             method="POST"
           >
             <button class="btn btn-danger" type="submit">Delete</button>

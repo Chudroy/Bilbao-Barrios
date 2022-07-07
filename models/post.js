@@ -1,3 +1,4 @@
+const Reply = require("./reply");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -26,4 +27,13 @@ const PostSchema = new Schema({
   likes: Number,
 });
 
+PostSchema.post("findOneAndDelete", async (doc) => {
+  if (doc) {
+    await Reply.deleteMany({
+      _id: {
+        $in: doc.replies,
+      },
+    });
+  }
+});
 module.exports = mongoose.model("Post", PostSchema);
