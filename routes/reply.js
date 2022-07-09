@@ -3,16 +3,20 @@ var router = express.Router({ mergeParams: true });
 const catchAsync = require("../utils/catchAsync");
 const Post = require("../models/post");
 const Reply = require("../models/reply");
+const isLoggedIn = require("../utils/isLoggedIn");
 
 // CREATE reply
 router.post(
   "/",
+  isLoggedIn,
   catchAsync(async function (req, res, next) {
     const { id } = req.params;
     // Create new reply
     let newReply = new Reply(req.body.reply);
     newReply.author = "Anonymous";
     newReply.date = Date.now();
+
+    // Add ID of post as original post of reply
     newReply.originalPost = id;
     await newReply.save();
 
@@ -22,6 +26,7 @@ router.post(
     await post.save();
 
     // Redirect to post
+    req.flash("success", "successfully posted comment");
     res.redirect(`/post/${id}`);
   })
 );
@@ -33,6 +38,7 @@ router.post(
 // DELETE Reply
 router.delete(
   "/:replyID",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { id, replyID } = req.params;
 
@@ -48,6 +54,7 @@ router.delete(
     await originalPost.save();
 
     // Redirect to post
+    req.flash("success", "successfully deleted comment");
     res.redirect(`/post/${id}`);
   })
 );
