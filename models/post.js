@@ -9,9 +9,8 @@ const PostSchema = new Schema({
     minlength: [3, "title is too short"],
   },
   author: {
-    type: String,
-    required: true,
-    minlength: 1,
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
   date: {
     type: Date,

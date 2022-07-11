@@ -4,8 +4,7 @@ const Post = require("../models/post");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/expressError");
 const replyRouter = require("./reply");
-const isLoggedIn = require("../utils/isLoggedIn");
-const passport = require("passport");
+const { isLoggedIn, isAuthor } = require("../utils/authMiddleware");
 
 router.use("/:id/replies", replyRouter);
 
@@ -18,9 +17,14 @@ router.get("/new", isLoggedIn, function (req, res, next) {
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isAuthor,
   catchAsync(async function (req, res, next) {
     const { id } = req.params;
     const post = await Post.findById(id);
+    if (!post) {
+      req.flash("error", "Cannot find Post");
+      return res.redirect("/");
+    }
     res.render("post/edit", { post });
   })
 );
@@ -33,7 +37,7 @@ router.post(
     if (!req.body.post) throw new ExpressError("Invalid Post Data", 400);
     let newPost = new Post(req.body.post);
     newPost.date = Date.now();
-    newPost.author = "Anonymous";
+    newPost.author = req.user._id;
     await newPost.save();
     req.flash("success", "Succesfully made a new post");
     res.redirect(`/post/${newPost._id}`);
@@ -45,7 +49,7 @@ router.get(
   "/:id",
   catchAsync(async function (req, res, next) {
     const { id } = req.params;
-    const post = await Post.findById(id).populate("replies");
+    const post = await Post.findById(id).populate("replies").populate("author");
     if (!post) {
       req.flash("error", "Cannot find that post");
       res.redirect("/");
@@ -58,9 +62,15 @@ router.get(
 router.put(
   "/:id",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     // Get the post by id, edit and run validate
+    const post = await Post.findById(id);
+    if (!post.author.equals(req.user._id)) {
+      req.flash("error", "Permission Denied");
+      return res.redirect(`/post/${id}`);
+    }
     const editedPost = await Post.findByIdAndUpdate(
       id,
       { ...req.body.post },
@@ -74,6 +84,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     // DELETE post
     const { id } = req.params;

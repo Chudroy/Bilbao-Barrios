@@ -76,7 +76,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(async (req, res, next) => {
-  console.log(req.session);
   res.locals.currentUser = req.user;
   res.locals.flash = {
     success: req.flash("success"),

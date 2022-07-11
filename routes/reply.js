@@ -3,7 +3,21 @@ var router = express.Router({ mergeParams: true });
 const catchAsync = require("../utils/catchAsync");
 const Post = require("../models/post");
 const Reply = require("../models/reply");
-const isLoggedIn = require("../utils/isLoggedIn");
+const { isLoggedIn, isAuthor } = require("../utils/authMiddleware");
+
+// GET reply edit form
+
+router.get("/:replyID/edit", async function (req, res, next) {
+  const { id, replyID } = req.params;
+  const post = await Post.findById(id);
+  const reply = await Reply.findById(replyID);
+  if (!reply) {
+    req.flash("error", "Cannot find Reply");
+    return res.redirect(`/post/${id}`);
+  }
+  console.log(reply);
+  res.render("reply/editReply", { reply, post });
+});
 
 // CREATE reply
 router.post(
@@ -13,7 +27,7 @@ router.post(
     const { id } = req.params;
     // Create new reply
     let newReply = new Reply(req.body.reply);
-    newReply.author = "Anonymous";
+    newReply.author = req.user._id;
     newReply.date = Date.now();
 
     // Add ID of post as original post of reply
@@ -34,11 +48,15 @@ router.post(
 // READ Reply
 
 // UPDATE Reply
-
+router.put("/:replyID/edit", async (req, res, next) => {
+  res.send("edited post");
+});
 // DELETE Reply
+//there's a problem with delete reply
 router.delete(
   "/:replyID",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res, next) => {
     const { id, replyID } = req.params;
 

@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 const ReplySchema = new Schema({
   author: {
-    type: String,
-    required: true,
-    minlength: 1,
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
   date: {
     type: String,
