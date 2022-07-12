@@ -49,11 +49,18 @@ router.get(
   "/:id",
   catchAsync(async function (req, res, next) {
     const { id } = req.params;
-    const post = await Post.findById(id).populate("replies").populate("author");
+    const post = await Post.findById(id)
+      .populate("author")
+      .populate({
+        path: "replies",
+        populate: { path: "author", model: "User" },
+      });
+
     if (!post) {
       req.flash("error", "Cannot find that post");
       res.redirect("/");
     }
+
     res.render("post/show", { post });
   })
 );
@@ -86,7 +93,6 @@ router.delete(
   isLoggedIn,
   isAuthor,
   catchAsync(async (req, res) => {
-    // DELETE post
     const { id } = req.params;
     await Post.findByIdAndDelete(id);
     req.flash("success", "successfully deleted post");

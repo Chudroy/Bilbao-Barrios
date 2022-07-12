@@ -88,7 +88,7 @@
 <div class="col-12 mb-3">
   <div class="card mb-3">
     <p class="text-secondary mb-0 ms-2">
-      Posted by <%=post.replies[index].author%>
+      Posted by <%=post.replies[index].author.username%>
     </p>
     <div class="card-body">
       <p class="card-text"><%=post.replies[index].content%></p>
@@ -100,6 +100,8 @@
           <p class="text-secondary">2 days ago</p>
         </div>
         <!-- Buttons -->
+        <% if (currentUser &&
+        post.replies[index].author.equals(currentUser._id)) { %>
         <div class="col text-end">
           <a
             class="card-link btn btn-info"
@@ -114,6 +116,7 @@
             <button class="btn btn-danger" type="submit">Delete</button>
           </form>
         </div>
+        <% } %>
         <!-- End Buttons -->
       </div>
     </div>

@@ -5,6 +5,14 @@ const Post = require("../models/post");
 const Reply = require("../models/reply");
 const { isLoggedIn, isAuthor } = require("../utils/authMiddleware");
 
+// REDIRECT
+
+router.get("/", (req, res, next) => {
+  const { id } = req.params;
+  console.log(req.body);
+  res.redirect(`/post/${id}`);
+});
+
 // GET reply edit form
 
 router.get("/:replyID/edit", async function (req, res, next) {
@@ -48,9 +56,25 @@ router.post(
 // READ Reply
 
 // UPDATE Reply
-router.put("/:replyID/edit", async (req, res, next) => {
-  res.send("edited post");
-});
+router.put(
+  "/:replyID/edit",
+  catchAsync(async (req, res) => {
+    const { id, replyID } = req.params;
+    // check if reply exists
+    const reply = await Reply.findById(replyID);
+    if (!reply.author.equals(req.user._id)) {
+      req.flash("error", "Permission Denied");
+      return res.redirect(`/post/${id}`);
+    }
+    // Get the reply by id, edit and run validate
+    const editedReply = await Reply.findByIdAndUpdate(
+      replyID,
+      { ...req.body.reply },
+      { useFindAndModify: false, runValidators: true }
+    );
+    res.redirect(`/post/${id}`);
+  })
+);
 // DELETE Reply
 //there's a problem with delete reply
 router.delete(

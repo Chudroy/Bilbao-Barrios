@@ -51,7 +51,6 @@ router.post(
   async function (req, res, next) {
     const redirectUrl = req.session.returnTo || "/";
     req.flash("success", "Welcome back!");
-    console.log(redirectUrl);
     res.redirect(redirectUrl);
   }
 );
