@@ -1,5 +1,7 @@
 const Post = require("../models/post");
 const catchAsync = require("../utils/catchAsync");
+const ExpressError = require("../utils/expressError");
+
 module.exports.index = async function (req, res, next) {
   try {
     const posts = await Post.find({});

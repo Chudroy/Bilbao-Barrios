@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
-const Post = require("../models/post");
-const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/expressError");
 const replyRouter = require("./reply");
 const { isLoggedIn, isAuthor } = require("../utils/authMiddleware");
 const post = require("../controllers/post");
+const multer = require("multer");
+const { storage } = require("../cloudinary");
+const upload = multer({ storage });
 
 router.use("/:id/replies", replyRouter);
 
@@ -16,15 +17,18 @@ router.get("/new", isLoggedIn, post.renderNewForm);
 router.get("/:id/edit", isLoggedIn, isAuthor, post.renderEditForm);
 
 // CREATE Post
-router.post("/", isLoggedIn, post.createNewPost);
+// router.post("/", isLoggedIn, post.createNewPost);
+router.post("/", upload.single("image"), isLoggedIn, (req, res) => {
+  res.send(req.file);
+});
 
-// READ a single post
-router.get("/:id", post.renderPost);
-
-// UPDATE the Post
-router.put("/:id", isLoggedIn, isAuthor, post.updatePost);
-
-// DELETE the post
-router.delete("/:id", isLoggedIn, isAuthor, post.deletePost);
+router
+  .route("/:id")
+  // READ a single post
+  .get(post.renderPost)
+  // UPDATE the Post
+  .put(isLoggedIn, isAuthor, post.updatePost)
+  // DELETE the post
+  .delete(isLoggedIn, isAuthor, post.deletePost);
 
 module.exports = router;
