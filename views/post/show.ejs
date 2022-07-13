@@ -57,6 +57,7 @@
 <!-- End Original Post -->
 
 <!-- Reply Form -->
+<% if (currentUser) { %>
 <div class="mb-3">
   <form
     action="/post/<%=post._id%>/replies"
@@ -79,11 +80,15 @@
     </div>
   </form>
 </div>
+<% } else { %>
+<div class="mb-3 text-center">
+  <h2>Sign in to reply</h2>
+</div>
+<% } %>
 <!-- End Reply Form -->
 
-<h2 class="mb-3">Replies</h2>
-
 <!-- Replies -->
+<h2 class="mb-3">Replies</h2>
 <% for( let index = 0; index < post.replies.length; index++ ) { %>
 <div class="col-12 mb-3">
   <div class="card mb-3">

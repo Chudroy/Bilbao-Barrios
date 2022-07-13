@@ -5,99 +5,26 @@ const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/expressError");
 const replyRouter = require("./reply");
 const { isLoggedIn, isAuthor } = require("../utils/authMiddleware");
+const post = require("../controllers/post");
 
 router.use("/:id/replies", replyRouter);
 
 // GET post form
-router.get("/new", isLoggedIn, function (req, res, next) {
-  res.render("post/new");
-});
+router.get("/new", isLoggedIn, post.renderNewForm);
 
 // GET edit form
-router.get(
-  "/:id/edit",
-  isLoggedIn,
-  isAuthor,
-  catchAsync(async function (req, res, next) {
-    const { id } = req.params;
-    const post = await Post.findById(id);
-    if (!post) {
-      req.flash("error", "Cannot find Post");
-      return res.redirect("/");
-    }
-    res.render("post/edit", { post });
-  })
-);
+router.get("/:id/edit", isLoggedIn, isAuthor, post.renderEditForm);
 
 // CREATE Post
-router.post(
-  "/",
-  isLoggedIn,
-  catchAsync(async function (req, res, next) {
-    if (!req.body.post) throw new ExpressError("Invalid Post Data", 400);
-    let newPost = new Post(req.body.post);
-    newPost.date = Date.now();
-    newPost.author = req.user._id;
-    await newPost.save();
-    req.flash("success", "Succesfully made a new post");
-    res.redirect(`/post/${newPost._id}`);
-  })
-);
+router.post("/", isLoggedIn, post.createNewPost);
 
 // READ a single post
-router.get(
-  "/:id",
-  catchAsync(async function (req, res, next) {
-    const { id } = req.params;
-    const post = await Post.findById(id)
-      .populate("author")
-      .populate({
-        path: "replies",
-        populate: { path: "author", model: "User" },
-      });
-
-    if (!post) {
-      req.flash("error", "Cannot find that post");
-      res.redirect("/");
-    }
-
-    res.render("post/show", { post });
-  })
-);
+router.get("/:id", post.renderPost);
 
 // UPDATE the Post
-router.put(
-  "/:id",
-  isLoggedIn,
-  isAuthor,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    // Get the post by id, edit and run validate
-    const post = await Post.findById(id);
-    if (!post.author.equals(req.user._id)) {
-      req.flash("error", "Permission Denied");
-      return res.redirect(`/post/${id}`);
-    }
-    const editedPost = await Post.findByIdAndUpdate(
-      id,
-      { ...req.body.post },
-      { useFindAndModify: false, runValidators: true }
-    );
-    res.redirect(`/post/${editedPost._id}`);
-  })
-);
+router.put("/:id", isLoggedIn, isAuthor, post.updatePost);
 
 // DELETE the post
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isAuthor,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Post.findByIdAndDelete(id);
-    req.flash("success", "successfully deleted post");
-    res.redirect("/");
-  })
-);
+router.delete("/:id", isLoggedIn, isAuthor, post.deletePost);
 
 module.exports = router;

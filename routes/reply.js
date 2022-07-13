@@ -3,7 +3,7 @@ var router = express.Router({ mergeParams: true });
 const catchAsync = require("../utils/catchAsync");
 const Post = require("../models/post");
 const Reply = require("../models/reply");
-const { isLoggedIn, isAuthor } = require("../utils/authMiddleware");
+const { isLoggedIn, isReplyAuthor } = require("../utils/authMiddleware");
 
 // REDIRECT
 
@@ -58,6 +58,8 @@ router.post(
 // UPDATE Reply
 router.put(
   "/:replyID/edit",
+  isLoggedIn,
+  isReplyAuthor,
   catchAsync(async (req, res) => {
     const { id, replyID } = req.params;
     // check if reply exists
@@ -75,12 +77,12 @@ router.put(
     res.redirect(`/post/${id}`);
   })
 );
+
 // DELETE Reply
-//there's a problem with delete reply
 router.delete(
   "/:replyID",
   isLoggedIn,
-  isAuthor,
+  isReplyAuthor,
   catchAsync(async (req, res, next) => {
     const { id, replyID } = req.params;
 
