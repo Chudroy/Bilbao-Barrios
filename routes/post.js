@@ -17,17 +17,14 @@ router.get("/new", isLoggedIn, post.renderNewForm);
 router.get("/:id/edit", isLoggedIn, isAuthor, post.renderEditForm);
 
 // CREATE Post
-// router.post("/", isLoggedIn, post.createNewPost);
-router.post("/", upload.single("image"), isLoggedIn, (req, res) => {
-  res.send(req.file);
-});
+router.post("/", isLoggedIn, upload.single("image"), post.createNewPost);
 
 router
   .route("/:id")
   // READ a single post
   .get(post.renderPost)
   // UPDATE the Post
-  .put(isLoggedIn, isAuthor, post.updatePost)
+  .put(isLoggedIn, upload.single("image"), isAuthor, post.updatePost)
   // DELETE the post
   .delete(isLoggedIn, isAuthor, post.deletePost);
 

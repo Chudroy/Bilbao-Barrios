@@ -9,8 +9,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  folder: "BilbaoBarrios",
-  allowedFormats: ["jpeg", "png", "jpg"],
+  params: {
+    folder: "BilbaoBarrios",
+    allowedFormats: ["jpeg", "png", "jpg"],
+  },
 });
 
 module.exports = { cloudinary, storage };

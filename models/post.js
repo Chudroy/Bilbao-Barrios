@@ -1,6 +1,7 @@
 const Reply = require("./reply");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const cloudinary = require("cloudinary");
 
 const PostSchema = new Schema({
   title: {
@@ -21,7 +22,10 @@ const PostSchema = new Schema({
     required: true,
     minlength: 1,
   },
-  image: String,
+  image: {
+    url: String,
+    filename: String,
+  },
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
   likes: Number,
 });
@@ -35,4 +39,5 @@ PostSchema.post("findOneAndDelete", async (doc) => {
     });
   }
 });
+
 module.exports = mongoose.model("Post", PostSchema);
