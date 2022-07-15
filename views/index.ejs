@@ -2,16 +2,17 @@
 <h1><%= title %></h1>
 <p>Welcome to <%=title%></p>
 <% for( let index=posts.length-1; index>= 0 ; index--) { %>
-<div class="card mb-3">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-lg-4 d-flex">
-        <img
-          src="<%=posts[index].image.url%> "
-          class="img-fluid align-self-center"
-        />
-      </div>
-      <div class="col-lg-8 d-flex">
+<div class="container-fluid d-flex justify-content-center align-items-center">
+  <div class="card shadow mb-3">
+    <% if (posts[index].image) { %>
+    <img
+      src="<%=posts[index].image.url%> "
+      class="img-fluid align-self-center card-img-top"
+      style="max-height: 600px; width: auto"
+    /><% } %>
+
+    <div class="card-body">
+      <div class="row">
         <div class="align-self-center">
           <h5 class="card-title"><%= posts[index].title %></h5>
           <p class="card-text"><%=posts[index].content%></p>

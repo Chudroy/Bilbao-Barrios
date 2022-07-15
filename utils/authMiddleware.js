@@ -6,7 +6,6 @@ const Reply = require("../models/reply");
 // authentication
 const isLoggedIn = (req, res, next) => {
   if (!req.user) {
-    console.log(req.originalUrl);
     req.session.returnTo = req.originalUrl;
     req.session.savedBody = req.body;
     req.flash("error", "you must be signed in");

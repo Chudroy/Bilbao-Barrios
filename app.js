@@ -15,6 +15,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const session = require("express-session");
+const mongoSanitize = require("express-mongo-sanitize");
 
 // connect to Database
 mongoose
@@ -51,6 +52,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
+app.use(mongoSanitize());
 
 // session middleware setup
 
@@ -85,6 +87,11 @@ app.use(async (req, res, next) => {
     error: req.flash("error"),
   };
 
+  next();
+});
+
+// manual debugging purposes
+app.use(async (req, res, next) => {
   next();
 });
 

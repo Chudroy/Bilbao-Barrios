@@ -23,6 +23,8 @@ module.exports.renderEditForm = catchAsync(async function (req, res, next) {
     req.flash("error", "Cannot find Post");
     return res.redirect("/");
   }
+  console.log("testing");
+  console.log(post.image.thumbnail);
   res.render("post/edit", { post });
 });
 
@@ -48,7 +50,10 @@ module.exports.createNewPost = catchAsync(async function (req, res, next) {
   let newPost = new Post(req.body.post);
   newPost.date = Date.now();
   newPost.author = req.user._id;
-  newPost.image = { url: req.file.path, filename: req.file.filename };
+  if (req.file) {
+    newPost.image = { url: req.file.path, filename: req.file.filename };
+  }
+
   await newPost.save();
   req.flash("success", "Succesfully made a new post");
   res.redirect(`/post/${newPost._id}`);
@@ -83,7 +88,10 @@ module.exports.updatePost = catchAsync(async (req, res) => {
 module.exports.deletePost = catchAsync(async (req, res) => {
   const { id } = req.params;
   const deletedPost = await Post.findByIdAndDelete(id);
-  cloudinary.v2.uploader.destroy(deletedPost.image.filename);
+  if (deletedPost.image) {
+    cloudinary.v2.uploader.destroy(deletedPost.image.filename);
+  }
+
   req.flash("success", "successfully deleted post");
   res.redirect("/");
 });

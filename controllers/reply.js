@@ -4,7 +4,7 @@ const Reply = require("../models/reply");
 
 module.exports.redirectToPost = (req, res, next) => {
   const { id } = req.params;
-  console.log(req.body);
+
   res.redirect(`/post/${id}`);
 };
 
@@ -16,7 +16,6 @@ module.exports.renderReplyEditForm = catchAsync(async (req, res, next) => {
     req.flash("error", "Cannot find Reply");
     return res.redirect(`/post/${id}`);
   }
-  console.log(reply);
   res.render("reply/editReply", { reply, post });
 });
 

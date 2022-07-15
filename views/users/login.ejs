@@ -1,29 +1,40 @@
 <% layout("layouts/boilerplate") %>
-<h1>Sign in</h1>
-<form action="/login" method="POST" novalidate class="validated-form">
-  <div class="mb-3">
-    <label class="form-label" for="username">Username</label>
-    <input
-      class="form-control"
-      type="text"
-      name="username"
-      id="username"
-      required
-    />
-    <div class="invalid-feedback">Please write a valid username.</div>
-  </div>
 
-  <div class="mb-3">
-    <label class="form-label" for="password">Password</label>
-    <input
-      class="form-control"
-      type="password"
-      name="password"
-      id="password"
-      required
-    />
-    <div class="invalid-feedback">Please write a valid password.</div>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow">
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Bilbao_logo.svg" class="card-img-top" > -->
+        <div class="card-body"><h5 class="card-title">Log in</h1>
+          <form action="/login" method="POST" novalidate class="validated-form">
+            <div class="mb-3">
+              <label class="form-label" for="username" >Username</label>
+              <input
+                class="form-control"
+                type="text"
+                name="username"
+                id="username"
+                required
+                autofocus
+              />
+              <div class="invalid-feedback">Please write a valid username.</div>
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+              <input
+                class="form-control"
+                type="password"
+                name="password"
+                id="password"
+                required
+              />
+              <div class="invalid-feedback">Please write a valid password.</div>
+            </div>
+  
+            <button class="btn btn-success">Submit</button>
+          </form></div>
+      </div>
+    </div>
   </div>
-
-  <button class="btn btn-success">Submit</button>
-</form>
+</div>

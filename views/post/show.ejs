@@ -22,11 +22,13 @@
         class="text-center mb-3"
         style="background-color: rgb(250, 249, 247)"
       >
+        <% if (post.image) { %>
         <img
           src="<%=post.image.url%>"
           class="img-fluid"
           style="max-height: 600px; width: auto"
         />
+        <% } %>
       </div>
       <p class="card-text"><%=post.content%></p>
     </div>

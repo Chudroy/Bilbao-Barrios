@@ -1,7 +1,15 @@
 const Reply = require("./reply");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const cloudinary = require("cloudinary");
+
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
+ImageSchema.virtual("thumbnail").get(function () {
+  return this.url.replace("/upload", "/upload/w_300");
+});
 
 const PostSchema = new Schema({
   title: {
@@ -22,10 +30,7 @@ const PostSchema = new Schema({
     required: true,
     minlength: 1,
   },
-  image: {
-    url: String,
-    filename: String,
-  },
+  image: ImageSchema,
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
   likes: Number,
 });
