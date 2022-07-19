@@ -23,8 +23,8 @@ module.exports.renderEditForm = catchAsync(async function (req, res, next) {
     req.flash("error", "Cannot find Post");
     return res.redirect("/");
   }
-  console.log("testing");
-  console.log(post.image.thumbnail);
+  // console.log("testing");
+  // console.log(post.image.thumbnail);
   res.render("post/edit", { post });
 });
 
@@ -47,6 +47,7 @@ module.exports.renderPost = catchAsync(async function (req, res, next) {
 
 module.exports.createNewPost = catchAsync(async function (req, res, next) {
   if (!req.body.post) throw new ExpressError("Invalid Post Data", 400);
+
   let newPost = new Post(req.body.post);
   newPost.date = Date.now();
   newPost.author = req.user._id;
@@ -61,6 +62,7 @@ module.exports.createNewPost = catchAsync(async function (req, res, next) {
 
 module.exports.updatePost = catchAsync(async (req, res) => {
   const { id } = req.params;
+
   // Get the post by id, edit and run validate
   const post = await Post.findById(id);
   if (!post.author.equals(req.user._id)) {
@@ -80,7 +82,9 @@ module.exports.updatePost = catchAsync(async (req, res) => {
     runValidators: true,
   });
 
-  cloudinary.v2.uploader.destroy(editedPost.image.filename);
+  if (editedPost.image) {
+    cloudinary.v2.uploader.destroy(editedPost.image.filename);
+  }
 
   res.redirect(`/post/${editedPost._id}`);
 });
