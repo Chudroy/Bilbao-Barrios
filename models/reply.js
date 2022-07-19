@@ -24,9 +24,4 @@ ReplySchema.add({
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
 });
 
-const replySchemaJoi = Joi.object({
-  content: Joi.string().min(2).required(),
-});
-
 module.exports = mongoose.model("Reply", ReplySchema);
-module.exports.replySchemaJoi = replySchemaJoi;

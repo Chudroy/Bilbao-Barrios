@@ -46,10 +46,4 @@ PostSchema.post("findOneAndDelete", async (doc) => {
   }
 });
 
-const postSchemaJoi = Joi.object({
-  title: Joi.string().alphanum().min(3).max(30).required(),
-  content: Joi.string().min(2).required(),
-});
-
 module.exports = mongoose.model("Post", PostSchema);
-module.exports.postSchemaJoi = postSchemaJoi;

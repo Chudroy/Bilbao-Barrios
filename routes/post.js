@@ -13,11 +13,19 @@ const { storage } = require("../cloudinary");
 const {
   validatePostMiddleware,
   validatePostMulter,
-} = require("../utils/joiValidation");
+} = require("../utils/validation");
+
+const path = require("path");
+const ExpressError = require("../utils/expressError");
 
 const upload = multer({
-  storage,
+  storage: storage,
   fileFilter: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
+      // return cb(new ExpressError("Only images are allowed", 400));
+      return cb(null, false);
+    }
     cb(null, validatePostMulter(req.body));
   },
 });

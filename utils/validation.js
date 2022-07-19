@@ -1,6 +1,13 @@
 const Joi = require("joi");
-const { postSchemaJoi } = require("../models/post");
-const ExpressError = require("../utils/expressError");
+const { postSchemaJoi } = require("../JOISchemas");
+const { replySchemaJoi } = require("../JOISchemas");
+const ExpressError = require("./expressError");
+
+/**
+ *
+ * POST
+ *
+ */
 
 /**
  * Post validation core code,
@@ -37,7 +44,34 @@ const validatePostMiddleware = (req, res, next) => {
   next();
 };
 
+/**
+ *
+ * REPLY
+ *
+ */
+
+const validateReply = function (body) {
+  const result = replySchemaJoi.validate(
+    {
+      content: body.reply.content,
+    },
+    { abortEarly: false }
+  );
+
+  return result.error ? result.error : undefined;
+};
+
+const validateReplyMiddleware = (req, res, next) => {
+  const error = validateReply(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  }
+  next();
+};
+
 module.exports = {
   validatePostMiddleware,
   validatePostMulter,
+  validateReplyMiddleware,
 };

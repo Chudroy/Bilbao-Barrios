@@ -1,3 +1,5 @@
+//in production, this has to be otuside of the if statement for the moment,
+// to be able to upload images
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -16,10 +18,15 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const session = require("express-session");
 const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const MongoStore = require("connect-mongo");
 
 // connect to Database
+
+const dbUrl = "mongodb://localhost:27017/BilbaoBarrios";
+
 mongoose
-  .connect("mongodb://localhost:27017/BilbaoBarrios", {
+  .connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -54,14 +61,58 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 app.use(mongoSanitize());
 
+// helmet middleware
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+const CSPArrays = require("./helmet/CSP arrays");
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...CSPArrays.connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...CSPArrays.scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...CSPArrays.styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      childSrc: ["blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`, //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
+        "https://images.unsplash.com",
+      ],
+      fontSrc: ["'self'", ...CSPArrays.fontSrcUrls],
+    },
+  })
+);
+
 // session middleware setup
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  secret: "dummySecret",
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", (e) => {
+  console.log(e);
+});
+
 const sessionConfig = {
+  store: store,
+  name: "session",
   secret: "dummySecret",
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
+    // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
