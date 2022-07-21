@@ -23,7 +23,7 @@ const MongoStore = require("connect-mongo");
 
 // connect to Database
 
-const dbUrl = "mongodb://localhost:27017/BilbaoBarrios";
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/BilbaoBarrios";
 
 mongoose
   .connect(dbUrl, {
@@ -94,9 +94,11 @@ app.use(
 
 // session middleware setup
 
+const secret = process.env.SECRET;
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
-  secret: "dummySecret",
+  secret: secret,
   touchAfter: 24 * 3600,
 });
 
@@ -107,7 +109,7 @@ store.on("error", (e) => {
 const sessionConfig = {
   store: store,
   name: "session",
-  secret: "dummySecret",
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
