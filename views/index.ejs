@@ -2,22 +2,26 @@
 <h1><%= title %></h1>
 <p>Welcome to <%=title%></p>
 <% for( let index=posts.length-1; index>= 0 ; index--) { %>
-<div class="container-fluid d-flex justify-content-center align-items-center">
-  <div class="card shadow mb-3">
-    <% if (posts[index].image) { %>
-    <img
-      src="<%=posts[index].image.url%> "
-      class="img-fluid align-self-center card-img-top"
-      style="max-height: 600px; width: auto"
-    /><% } %>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow mb-3">
+      <% if (posts[index].image) { %>
+      <img
+        src="<%=posts[index].image.url%> "
+        class="img-fluid align-self-center card-img-top"
+        style="max-height: 600px; width: auto"
+      /><% } %>
 
-    <div class="card-body">
-      <div class="row">
-        <div class="align-self-center">
-          <h5 class="card-title"><%= posts[index].title %></h5>
-          <p class="card-text"><%=posts[index].content%></p>
-          <p class="card-text"><small class="text-muted">X Replies</small></p>
-          <a href="post/<%=posts[index]._id%> " class="btn btn-primary">View</a>
+      <div class="card-body">
+        <div class="row">
+          <div class="align-self-center">
+            <h5 class="card-title"><%= posts[index].title %></h5>
+            <p class="card-text"><%=posts[index].content%></p>
+            <p class="card-text"><small class="text-muted">X Replies</small></p>
+            <a href="post/<%=posts[index]._id%> " class="btn btn-primary"
+              >View</a
+            >
+          </div>
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ const extension = (joi) => ({
 const Joi = BaseJoi.extend(extension);
 
 module.exports.postSchemaJoi = Joi.object({
-  title: Joi.string().alphanum().min(3).max(30).required().escapeHTML(),
+  title: Joi.string().min(3).max(30).required().escapeHTML(),
   content: Joi.string().min(1).required().escapeHTML(),
 });
 
