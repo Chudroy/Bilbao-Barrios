@@ -7,7 +7,6 @@ module.exports.scriptSrcUrls = [
   "https://cdn.jsdelivr.net",
 ];
 module.exports.styleSrcUrls = [
-  "https://kit-free.fontawesome.com",
   "https://stackpath.bootstrapcdn.com",
   "https://api.mapbox.com",
   "https://api.tiles.mapbox.com",
@@ -16,8 +15,9 @@ module.exports.styleSrcUrls = [
   "https://cdn.jsdelivr.net",
 ];
 module.exports.connectSrcUrls = [
+  "https://ka-f.fontawesome.com",
   "https://api.mapbox.com",
   "https://*.tiles.mapbox.com",
   "https://events.mapbox.com",
 ];
-module.exports.fontSrcUrls = [];
+module.exports.fontSrcUrls = ["https://ka-f.fontawesome.com"];
