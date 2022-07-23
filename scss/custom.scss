@@ -21,7 +21,7 @@ $theme-colors: map-merge($custom-theme-colors, $theme-colors);
 // 5. Then add additional custom code here
 
  .thumb-post img {
-    object-fit: cover; /* Do not scale the image */
+    object-fit: scale-down; /* Do not scale the image */
     object-position: center; /* Center the image within the element */
     width: 100%;
     max-height: 500px;
