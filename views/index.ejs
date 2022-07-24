@@ -2,30 +2,65 @@
 
 <!-- Posts -->
 <% for( let index=posts.length-1; index>= 0 ; index--) { %>
-<div class="col-md-12 d-flex justify-content-center">
-  <div class="card shadow mb-3 w-50">
-    <% if (posts[index].image) { %>
-    <div class="thumb-post bg-bilbaoLight">
-      <img
-        src="<%=posts[index].image.url%> "
-        class="card-img-top img-fluid mh-25"
-      />
-    </div>
-    <% } %>
-    <div class="card-body">
-      <div class="text-center">
+<div class="d-flex justify-content-center align-self-center">
+  <div class="col-12 col-lg-8 col-xl-6">
+    <div class="card shadow mb-3">
+      <% if (posts[index].image) { %>
+      <div class="thumb-post bg-bilbaoLight">
+        <img
+          src="<%=posts[index].image.url%> "
+          class="card-img-top img-fluid mh-25"
+        />
+      </div>
+      <div class="card-body">
+        <div class="text-center">
+          <h3 class="card-title"><%= posts[index].title %></h3>
+          <a
+            href="post/<%=posts[index]._id%> "
+            class="btn btn-bilbaotheme text-light ms-3"
+            >View</a
+          >
+        </div>
+      </div>
+      <% } else { %>
+      <div class="card-body">
+        <div class="d-flex bilbao-text-color">
+          <p class="card-text me-3"><%=posts[index].author.username%></p>
+          <p class="card-text me-3">Abando</p>
+          <p class="card-text me-3">Abandoibarra</p>
+          <p class="card-text">
+            <small class="me-3">Hace 3 minutos</small>
+          </p>
+        </div>
         <h3 class="card-title"><%= posts[index].title %></h3>
         <p class="card-text"><%=posts[index].content%></p>
-        <p class="card-text"><small class="text-muted">X Replies</small></p>
-        <p class="card-text">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </p>
-        <a
-          href="post/<%=posts[index]._id%> "
-          class="btn btn-bilbaotheme text-light ms-3"
-          >View</a
-        >
+        <div class="d-flex">
+          <p class="card-text text-secondary me-3">
+            <i class="bilbao-icon fa-solid fa-message"></i> X Comentarios
+          </p>
+          <p class="card-text text-secondary me-3">
+            <i class="bilbao-icon fa-solid fa-share-nodes"></i> Compartir
+          </p>
+          <p class="card-text text-secondary me-3">
+            <i class="bilbao-icon fa-solid fa-bookmark"></i> Compartir
+          </p>
+          <p class="card-text text-secondary me-3">
+            <i class="bilbao-icon fa-solid fa-ellipsis"></i>
+          </p>
+          <div class="d-flex ms-auto">
+            <p class="card-text text-secondary me-3">
+              <i class="bilbao-green fa-solid fa-thumbs-up"></i>
+            </p>
+            <p class="card-text text-secondary me-3">
+              <i class="bilbao-red fa-solid fa-thumbs-down"></i>
+            </p>
+          </div>
+
+          <a href="post/<%=posts[index]._id%> " class="stretched-link"></a>
+        </div>
       </div>
+
+      <% } %>
     </div>
   </div>
 </div>

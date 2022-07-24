@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary");
 
 module.exports.index = async function (req, res, next) {
   try {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).populate("author");
     res.render("index", { title: "Homepage", posts });
   } catch (e) {
     console.log("index error", e);
