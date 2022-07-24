@@ -2,6 +2,7 @@ const Reply = require("./reply");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
+const dateTime = require("../controllers/dateTime");
 
 const ImageSchema = new Schema({
   url: String,
@@ -34,6 +35,14 @@ const PostSchema = new Schema({
   image: ImageSchema,
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
   likes: Number,
+});
+
+PostSchema.virtual("timeSincePost").get(function () {
+  return dateTime.getTimeDif(this.date);
+});
+
+PostSchema.virtual("replyNumber").get(function () {
+  return this.replies.length;
 });
 
 PostSchema.post("findOneAndDelete", async (doc) => {

@@ -50,3 +50,10 @@ $theme-colors: map-merge($custom-theme-colors, $theme-colors);
   .bilbao-text-color p {
     color: $bilbao-theme;
   }
+
+  .small-circle {
+    font-size: 3px;
+    height: 6px;
+    vertical-align: middle;
+  }
+ 

@@ -2,6 +2,7 @@ const Post = require("../models/post");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/expressError");
 const cloudinary = require("cloudinary");
+const dateTime = require("./dateTime");
 
 module.exports.index = async function (req, res, next) {
   try {

@@ -35,7 +35,7 @@
 
     <div class="card-footer">
       <div class="row">
-        <div class="col">2 days ago</div>
+        <div class="col"><%= post.timeSincePost %></div>
         <!-- Buttons -->
         <% if (currentUser && post.author.equals(currentUser._id)) { %>
         <div class="col text-end">
