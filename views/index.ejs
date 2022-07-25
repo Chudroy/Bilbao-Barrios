@@ -1,34 +1,40 @@
 <% layout("layouts/boilerplate") %>
-<!-- Post Filter Buttons -->
-<%- include("partials/postFilters/postFilterButtons") %>
-<!-- Post Filter Navbar -->
-<%- include("partials/postFilters/postFilterNav") %>
-<!-- Posts -->
-<% for( let index=posts.length-1; index>= 0 ; index--) { %>
-<div class="d-flex justify-content-center align-self-center">
-  <div class="col-12 col-lg-8 col-xl-6">
-    <div class="card shadow mb-3">
-      <!-- card with image -->
-      <% if (posts[index].image) { %>
-      <div class="card-body">
-        <%- include("partials/card/cardHeader", {post: posts[index]}) %>
-        <!-- Image Partial -->
-        <%- include("partials/card/cardImage", {post:posts[index] }) %>
-        <a href="post/<%=posts[index]._id%> " class="stretched-link"></a>
-        <h3 class="card-title mb-3"><%= posts[index].title %></h3>
-        <%- include("partials/card/cardFooter", {post: posts[index]}) %>
+<!-- Neighbourhood Filter Nav -->
+<div class="row">
+  <div class="col-auto"><%- include("partials/neighbourhoodAccordion") %></div>
+  <!-- Post Filter Buttons -->
+  <div class="col-auto d-flex justify-content-center align-self-center">
+    <div class="col-12 offset-sm-3 col-lg-8 col-xl-6">
+      <%- include("partials/postFilters/postFilterButtons") %>
+      <!-- Post Filter Navbar -->
+      <%- include("partials/postFilters/postFilterNav") %>
+      <!-- Posts -->
+      <% for( let index=posts.length-1; index>= 0 ; index--) { %>
+
+      <div class="card shadow mb-3">
+        <!-- card with image -->
+        <% if (posts[index].image) { %>
+        <div class="card-body">
+          <%- include("partials/card/cardHeader", {post: posts[index]}) %>
+          <!-- Image Partial -->
+          <%- include("partials/card/cardImage", {post:posts[index] }) %>
+          <a href="post/<%=posts[index]._id%> " class="stretched-link"></a>
+          <h3 class="card-title mb-3"><%= posts[index].title %></h3>
+          <%- include("partials/card/cardFooter", {post: posts[index]}) %>
+        </div>
+        <% } else { %>
+        <!-- card with no image -->
+        <div class="card-body">
+          <%- include("partials/card/cardHeader", {post: posts[index]}) %>
+          <h3 class="card-title"><%= posts[index].title %></h3>
+          <p class="card-text"><%=posts[index].content%></p>
+          <a href="post/<%=posts[index]._id%> " class="stretched-link"></a>
+          <%- include("partials/card/cardFooter", {post: posts[index]}) %>
+        </div>
+        <% } %>
       </div>
-      <% } else { %>
-      <!-- card with no image -->
-      <div class="card-body">
-        <%- include("partials/card/cardHeader", {post: posts[index]}) %>
-        <h3 class="card-title"><%= posts[index].title %></h3>
-        <p class="card-text"><%=posts[index].content%></p>
-        <a href="post/<%=posts[index]._id%> " class="stretched-link"></a>
-        <%- include("partials/card/cardFooter", {post: posts[index]}) %>
-      </div>
+
       <% } %>
     </div>
   </div>
 </div>
-<% } %>
