@@ -31,8 +31,8 @@ $theme-colors: map-merge($custom-theme-colors, $theme-colors);
  .thumb-post img {
     object-fit: scale-down; /* Do not scale the image */
     object-position: center; /* Center the image within the element */
-    max-width: 512px; 
-    height: auto;
+    max-height: 512px; 
+    width: auto;
   }
 
   .bilbao-green {
