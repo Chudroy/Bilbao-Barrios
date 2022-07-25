@@ -29,6 +29,6 @@ module.exports.postSchemaJoi = Joi.object({
   content: Joi.string().min(1).required().escapeHTML(),
 });
 
-module.exports.stringreplySchemaJoi = Joi.object({
+module.exports.replySchemaJoi = Joi.object({
   content: Joi.string().min(1).required().escapeHTML(),
 });

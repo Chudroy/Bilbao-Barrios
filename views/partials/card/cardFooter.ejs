@@ -1,16 +1,21 @@
 <div class="d-flex">
   <p class="card-text text-secondary me-3">
     <i class="bilbao-icon fa-solid fa-message"></i> <%= post.replyNumber %>
-    Comentarios
+    <span class="d-none d-md-inline"
+      >Comentario<%= post.replyNumber === 1 ? "" : "s" %>
+    </span>
   </p>
   <p class="card-text text-secondary me-3">
-    <i class="bilbao-icon fa-solid fa-share-nodes"></i> Compartir
+    <i class="bilbao-icon fa-solid fa-share-nodes"></i>
+    <span class="d-none d-md-inline">Compartir</span>
   </p>
   <p class="card-text text-secondary me-3">
-    <i class="bilbao-icon fa-solid fa-bookmark"></i> Guardar
+    <i class="bilbao-icon fa-solid fa-bookmark"></i>
+    <span class="d-none d-md-inline">Guardar</span>
   </p>
   <p class="card-text text-secondary me-3">
-    <i class="bilbao-icon fa-solid fa-ellipsis"></i>
+    <!-- <i class="bilbao-icon fa-solid fa-ellipsis"></i> -->
+    <%- include("./cardDropdown", {post}) %>
   </p>
   <div class="d-flex ms-auto">
     <p class="card-text text-secondary me-3">

@@ -3,133 +3,104 @@
   <a href="/">Back to Index</a>
 </div>
 
-<!-- Original Post -->
-<div class="col-12 mb-3">
-  <div class="card mb-3">
-    <div class="card-head">
-      <div class="">
-        <p class="card-text text-secondary ms-2">
-          Posted by <%=post.author.username%>
-        </p>
-      </div>
-      <div class="mb-3">
-        <h1 class="ms-3"><%=post.title%></h1>
-      </div>
-    </div>
-
-    <div class="card-body">
-      <div
-        class="text-center mb-3"
-        style="background-color: rgb(250, 249, 247)"
-      >
+<div class="d-flex justify-content-center align-self-center">
+  <div class="col-12 col-lg-8 col-xl-6">
+    <!-- original post -->
+    <div class="card shadow mb-3">
+      <div class="card-body">
+        <%- include("../partials/card/cardHeader", {post}) %>
+        <h3 class="card-title mb-3"><%= post.title %></h3>
+        <!-- Image -->
         <% if (post.image) { %>
-        <img
-          src="<%=post.image.url%>"
-          class="img-fluid"
-          style="max-height: 600px; width: auto"
-        />
-        <% } %>
+        <!-- Image Partial -->
+        <%- include("../partials/card/cardImage", {post}) %> <% } %>
+        <!-- End Image -->
+        <p class="card-text"><%=post.content%></p>
+        <%- include("../partials/card/cardFooter", {post}) %>
       </div>
-      <p class="card-text"><%=post.content%></p>
     </div>
 
-    <div class="card-footer">
-      <div class="row">
-        <div class="col"><%= post.timeSincePost %></div>
-        <!-- Buttons -->
-        <% if (currentUser && post.author.equals(currentUser._id)) { %>
-        <div class="col text-end">
-          <a class="card-link btn btn-info" href="/post/<%=post._id%>/edit"
-            >Edit</a
-          >
-          <form
-            class="d-inline"
-            action="/post/<%=post._id%>?_method=DELETE"
-            method="POST"
-          >
-            <button class="btn btn-danger" type="submit">Delete</button>
-          </form>
-        </div>
-        <% } %>
-        <!-- End Buttons -->
+    <!-- Reply Form -->
+    <% if (currentUser) { %>
+    <div class="card shadow mb-3">
+      <div class="card-body">
+        <form
+          action="/post/<%=post._id%>/replies"
+          method="POST"
+          novalidate
+          class="validated-form"
+        >
+          <label for="reply" class="form-label text-center">Post a Reply</label>
+          <textarea
+            class="form-control mb-3"
+            id="reply"
+            rows="3"
+            name="reply[content]"
+            placeholder="What do you think?"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Can't submit an empty reply!</div>
+          <div class="text-end">
+            <button class="btn btn-bilbaotheme text-light" type="submit">
+              Comentar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
+    <% } else { %>
+    <div class="mb-3 text-center">
+      <h2>Sign in to reply</h2>
+    </div>
+    <% } %>
+    <!-- End Reply Form -->
+
+    <!-- Replies -->
+    <% if (post.replies.length > 0) { %>
+    <h2 class="mb-3">Replies</h2>
+    <% } %>
+    <!-- Reply List -->
+    <% for( let index = 0; index < post.replies.length; index++ ) { %>
+    <div class="col-12 mb-3">
+      <div class="card mb-3">
+        <p class="text-secondary mb-0 ms-2">
+          Posted by <%=post.replies[index].author.username%>
+        </p>
+        <div class="card-body">
+          <p class="card-text"><%=post.replies[index].content%></p>
+        </div>
+
+        <div class="card-footer">
+          <div class="row">
+            <div class="col">
+              <p class="text-secondary">2 days ago</p>
+            </div>
+            <!-- Buttons -->
+            <% if (currentUser &&
+            post.replies[index].author.equals(currentUser._id)) { %>
+            <div class="col text-end">
+              <a
+                class="card-link btn btn-info"
+                href="/post/<%=post._id%>/replies/<%=post.replies[index]._id%>/edit"
+                >Edit</a
+              >
+              <form
+                class="d-inline"
+                action="/post/<%=post._id%>/replies/<%=post.replies[index]._id%>?_method=DELETE"
+                method="POST"
+              >
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+            </div>
+            <% } %>
+            <!-- End Buttons -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% } %>
+
+    <!-- End Replies -->
   </div>
 </div>
-<!-- End Original Post -->
-
-<!-- Reply Form -->
-<% if (currentUser) { %>
-<div class="mb-3">
-  <form
-    action="/post/<%=post._id%>/replies"
-    method="POST"
-    novalidate
-    class="validated-form"
-  >
-    <label for="reply" class="form-label text-center">Post a Reply</label>
-    <textarea
-      class="form-control mb-3"
-      id="reply"
-      rows="3"
-      name="reply[content]"
-      placeholder="What do you think?"
-      required
-    ></textarea>
-    <div class="invalid-feedback">Can't submit an empty reply!</div>
-    <div class="text-end">
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </div>
-  </form>
-</div>
-<% } else { %>
-<div class="mb-3 text-center">
-  <h2>Sign in to reply</h2>
-</div>
-<% } %>
-<!-- End Reply Form -->
-
-<!-- Replies -->
-<h2 class="mb-3">Replies</h2>
-<% for( let index = 0; index < post.replies.length; index++ ) { %>
-<div class="col-12 mb-3">
-  <div class="card mb-3">
-    <p class="text-secondary mb-0 ms-2">
-      Posted by <%=post.replies[index].author.username%>
-    </p>
-    <div class="card-body">
-      <p class="card-text"><%=post.replies[index].content%></p>
-    </div>
-
-    <div class="card-footer">
-      <div class="row">
-        <div class="col">
-          <p class="text-secondary">2 days ago</p>
-        </div>
-        <!-- Buttons -->
-        <% if (currentUser &&
-        post.replies[index].author.equals(currentUser._id)) { %>
-        <div class="col text-end">
-          <a
-            class="card-link btn btn-info"
-            href="/post/<%=post._id%>/replies/<%=post.replies[index]._id%>/edit"
-            >Edit</a
-          >
-          <form
-            class="d-inline"
-            action="/post/<%=post._id%>/replies/<%=post.replies[index]._id%>?_method=DELETE"
-            method="POST"
-          >
-            <button class="btn btn-danger" type="submit">Delete</button>
-          </form>
-        </div>
-        <% } %>
-        <!-- End Buttons -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<% } %>
-
-<!-- End Replies -->

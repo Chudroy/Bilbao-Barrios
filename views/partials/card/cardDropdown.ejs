@@ -1,0 +1,28 @@
+<% if (currentUser && post.author.equals(currentUser._id)) { %>
+<div class="dropdown">
+  <a
+    class=""
+    href="#"
+    role="button"
+    id="dropdownMenuLink"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    <i class="bilbao-icon fa-solid fa-ellipsis"></i>
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li>
+      <a class="dropdown-item" href="/post/<%=post._id%>/edit"> Editar </a>
+    </li>
+    <li>
+      <form
+        class="d-inline"
+        action="/post/<%=post._id%>?_method=DELETE"
+        method="POST"
+      >
+        <button class="dropdown-item" type="submit">Borrar</button>
+      </form>
+    </li>
+  </ul>
+</div>
+<% } %>
