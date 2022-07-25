@@ -1,7 +1,6 @@
 const Reply = require("./reply");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Joi = require("joi");
 const dateTime = require("../controllers/dateTime");
 
 const ImageSchema = new Schema({

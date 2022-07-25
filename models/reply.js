@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Joi = require("joi");
+const dateTime = require("../controllers/dateTime");
 
 const ReplySchema = new Schema({
   author: {
@@ -8,7 +8,7 @@ const ReplySchema = new Schema({
     ref: "User",
   },
   date: {
-    type: String,
+    type: Date,
     required: true,
   },
   content: {
@@ -18,6 +18,10 @@ const ReplySchema = new Schema({
   },
   originalPost: { type: Schema.Types.ObjectId, ref: "Post" },
   likes: Number,
+});
+
+ReplySchema.virtual("timeSinceReply").get(function () {
+  return dateTime.getTimeDif(this.date);
 });
 
 ReplySchema.add({
