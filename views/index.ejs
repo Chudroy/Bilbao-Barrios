@@ -1,5 +1,8 @@
 <% layout("layouts/boilerplate") %>
-
+<!-- Post Filter Buttons -->
+<%- include("partials/postFilters/postFilterButtons") %>
+<!-- Post Filter Navbar -->
+<%- include("partials/postFilters/postFilterNav") %>
 <!-- Posts -->
 <% for( let index=posts.length-1; index>= 0 ; index--) { %>
 <div class="d-flex justify-content-center align-self-center">

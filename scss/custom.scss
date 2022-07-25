@@ -7,10 +7,11 @@
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
 
-$bilbao-theme: #3d80b8;
+$bilbao-theme: #437aa7;
 $bilbao-light: #cfe7fc;
 $bilbao-green:  #89f060;
 $bilbao-red: #d60202;
+$bilbao-orange: #fca400;
 
 $custom-theme-colors: (
     "bilbaotheme": $bilbao-theme,
@@ -33,6 +34,10 @@ $theme-colors: map-merge($custom-theme-colors, $theme-colors);
     object-position: center; /* Center the image within the element */
     max-height: 512px; 
     width: auto;
+  }
+
+  .bilbao-orange {
+    color: $bilbao-orange
   }
 
   .bilbao-green {
