@@ -1,10 +1,12 @@
 <% layout("layouts/boilerplate") %>
 <!-- Neighbourhood Filter Nav -->
 <div class="row">
-  <div class="col-auto"><%- include("partials/neighbourhoodAccordion") %></div>
+  <div class="col d-none d-md-block">
+    <%- include("partials/neighbourhoodAccordion") %>
+  </div>
   <!-- Post Filter Buttons -->
-  <div class="col-auto d-flex justify-content-center align-self-center">
-    <div class="col-12 offset-sm-3 col-lg-8 col-xl-6">
+  <div class="d-flex justify-content-center align-self-center">
+    <div class="col col-md-8 offset-md-6 col-xl-6 offset-lg-5 offset-xl-1">
       <%- include("partials/postFilters/postFilterButtons") %>
       <!-- Post Filter Navbar -->
       <%- include("partials/postFilters/postFilterNav") %>

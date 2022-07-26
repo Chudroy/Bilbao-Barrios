@@ -1,235 +1,86 @@
+<!-- Neighbourhoods -->
+<% const neighbourhoods = [ { district: "Deusto", neighbourhoods: [ "Arangoiti",
+"Ibarrekolanda", "San Inazio", "Deusto", ], }, { district: "Uribarri",
+neighbourhoods: [ "Castaños", "Matico-Ciudad Jardín", "Uribarri",
+"Zurbaran-Arabella" ], }, { district: "Otxarkoaga-Txurdinaga", neighbourhoods:
+["Otxarkoaga", "Txurdinaga"], }, { district: "Begoña", neighbourhoods:
+["Begoña", "Bolueta", "Santutxu"], }, { district: "Ibaiondo", neighbourhoods: [
+"Atxuri", "Bilbao La Vieja", "Casco Viejo", "Iturralde", "La Peña", "Miribilla",
+"San Adrian", "San Francisco", "Buia", "Solokoetxe", "Zabala", ], }, { district:
+"Abando", neighbourhoods: ["Abando", "Indautxu", "Abandoibarra"], }, { district:
+"Recalde", neighbourhoods: [ "Ametzola", "Iralabarri", "Iturrigorri-Peñascal",
+"Rekaldeberri", "Larraskitu", "Uretamendi", "Betolaza", ], }, { district:
+"Basurto-Zorroza", neighbourhoods: [ "Altamira", "Basurto", "Olabeaga",
+"Masustegui", "Zorroza", ], }, ]; %>
+<!-- End Neighbourhoods -->
+
 <div class="card position-fixed">
   <div class="card-body">
     <!-- Accordion -->
     <div class="accordion accordion-flush" id="accordionFlushExample">
-      <!-- Deusto -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingOne">
+      <form action="/" method="POST">
+        <% for( let index = 0; index < neighbourhoods.length; index++ ) { %>
+        <div
+          class="accordion-header d-flex justify-content-between align-items-center"
+          id="flush-heading<%=index%>"
+        >
           <button
             class="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseOne"
+            data-bs-target="#flush-collapse<%=index%>"
             aria-expanded="false"
-            aria-controls="flush-collapseOne"
+            aria-controls="flush-collapse<%=index%>"
           >
-            Deusto
+            <div><%= neighbourhoods[index].district %></div>
           </button>
-        </h2>
-        <div
-          id="flush-collapseOne"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingOne"
-        >
-          <div class="accordion-body">
-            <ul>
-              <li>Arangoiti</li>
-              <li>Ibarrekolanda</li>
-              <li>San Inazio-Elorrieta</li>
-              <li>Deusto</li>
-            </ul>
+          <div class="ms-1">
+            <label class="form-check-label" for="district">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="district"
+              />
+            </label>
           </div>
         </div>
-      </div>
-      <!-- Uribarri -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingTwo">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseTwo"
-            aria-expanded="false"
-            aria-controls="flush-collapseTwo"
+        <div class="accordion-item">
+          <div
+            id="flush-collapse<%=index%>"
+            class="accordion-collapse collapse"
+            aria-labelledby="flush-heading<%=index%>"
           >
-            Uribarri
-          </button>
-        </h2>
-        <div
-          id="flush-collapseTwo"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingTwo"
-        >
-          <div class="accordion-body">
-            <ul>
-              <li>Castaños</li>
-              <li>Matico-Ciudad Jardín</li>
-              <li>Uríbarri</li>
-              <li>Zurbaran-Arabella</li>
-            </ul>
+            <div class="accordion-body">
+              <ul class="list-group list-group-flush">
+                <% for( let j = 0; j <
+                neighbourhoods[index].neighbourhoods.length; j++ ) { %>
+                <li class="list-group-item p-0">
+                  <div class="form-check p-0">
+                    <label
+                      class="form-check-label d-flex justify-content-between"
+                      for="neighbourhood"
+                    >
+                      <%= neighbourhoods[index].neighbourhoods[j]%>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="neighbourhood"
+                      />
+                    </label>
+                  </div>
+                </li>
+                <% } %>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-      <!--Otxarkoaga-Txurdinaga -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingThree">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseThree"
-            aria-expanded="false"
-            aria-controls="flush-collapseThree"
-          >
-            Otxarkoaga-Txurdinaga
-          </button>
-        </h2>
-        <div
-          id="flush-collapseThree"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingThree"
-        >
-          <div class="accordion-body">
-            <li>Ocharcoaga</li>
-            <li>Churdínaga</li>
-          </div>
+        <% } %>
+        <div class="mt-3 text-center">
+          <a href="#" class="btn btn-bilbaotheme text-light">Search</a>
         </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingFour">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseFour"
-            aria-expanded="false"
-            aria-controls="flush-collapseFour"
-          >
-            Begoña
-          </button>
-        </h2>
-        <div
-          id="flush-collapseFour"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingFour"
-        >
-          <div class="accordion-body">
-            <li>Begoña</li>
-            <li>Bolueta</li>
-            <li>Santuchu</li>
-          </div>
-        </div>
-      </div>
-      <!-- Ibaiondo -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingFive">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseFive"
-            aria-expanded="false"
-            aria-controls="flush-collapseFive"
-          >
-            Ibaiondo
-          </button>
-        </h2>
-        <div
-          id="flush-collapseFive"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingFive"
-        >
-          <div class="accordion-body">
-            <li>Achuri</li>
-            <li>Bilbao La Vieja</li>
-            <li>Casco Viejo</li>
-            <li>Iturralde</li>
-            <li>La Peña</li>
-            <li>Miribilla</li>
-            <li>San Adrián</li>
-            <li>San Francisco</li>
-            <li>Buia</li>
-            <li>Solocoeche</li>
-            <li>Zabala</li>
-          </div>
-        </div>
-      </div>
-      <!-- Abando -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingSix">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseSix"
-            aria-expanded="false"
-            aria-controls="flush-collapseSix"
-          >
-            Abando
-          </button>
-        </h2>
-        <div
-          id="flush-collapseSix"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingSix"
-        >
-          <div class="accordion-body">
-            <li>Abando</li>
-            <li>Indauchu</li>
-            <li>Abandoibarras</li>
-          </div>
-        </div>
-      </div>
-      <!-- Basurto-Zorroza -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingSeven">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseSeven"
-            aria-expanded="false"
-            aria-controls="flush-collapseSeven"
-          >
-            Recalde
-          </button>
-        </h2>
-        <div
-          id="flush-collapseSeven"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingSeven"
-        >
-          <div class="accordion-body">
-            <li>Amézola</li>
-            <li>Iralabarri</li>
-            <li>Iturrigorri-Peñascal</li>
-            <li>Rekaldeberri-Larrasquitu</li>
-            <li>Uretamendi</li>
-            <li>Betolaza</li>
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingEight">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseEight"
-            aria-expanded="false"
-            aria-controls="flush-collapseEight"
-          >
-            Basurto-Zorroza
-          </button>
-        </h2>
-        <div
-          id="flush-collapseEight"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-headingEight"
-        >
-          <div class="accordion-body">
-            <li>Altamira</li>
-            <li>Basurto</li>
-            <li>Olabeaga</li>
-            <li>Masustegui-Monte Caramelo</li>
-            <li>Zorroza</li>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-3 text-center">
-        <a href="#" class="btn btn-bilbaotheme text-light">Search</a>
-      </div>
+      </form>
     </div>
   </div>
 </div>
