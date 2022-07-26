@@ -148,6 +148,15 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// neighbourhood list loader
+
+const { neighbourhoods } = require("./private/javascripts/neighbourhoods.js");
+
+app.use(async (req, res, next) => {
+  res.locals.neighbourhoods = neighbourhoods;
+  next();
+});
+
 // middleware routers setup
 
 app.use("/", indexRouter);

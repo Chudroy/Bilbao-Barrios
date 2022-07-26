@@ -1,15 +1,10 @@
 module.exports.neighbourhoods = [
   {
     district: "Deusto",
-    neighbourhoods: [
-      "Arangoiti",
-      "Ibarrekolanda",
-      "San Inazio-Elorrieta",
-      "Deusto",
-    ],
+    neighbourhoods: ["Arangoiti", "Ibarrekolanda", "San Inazio", "Deusto"],
   },
   {
-    district: "Uríbarri",
+    district: "Uribarri",
     neighbourhoods: [
       "Castaños",
       "Matico-Ciudad Jardín",
@@ -21,10 +16,7 @@ module.exports.neighbourhoods = [
     district: "Otxarkoaga-Txurdinaga",
     neighbourhoods: ["Otxarkoaga", "Txurdinaga"],
   },
-  {
-    district: "Begoña",
-    neighbourhoods: ["Begoña", "Bolueta", "Santutxu"],
-  },
+  { district: "Begoña", neighbourhoods: ["Begoña", "Bolueta", "Santutxu"] },
   {
     district: "Ibaiondo",
     neighbourhoods: [
@@ -51,7 +43,8 @@ module.exports.neighbourhoods = [
       "Ametzola",
       "Iralabarri",
       "Iturrigorri-Peñascal",
-      "Rekaldeberri-Larrasquitu",
+      "Rekaldeberri",
+      "Larraskitu",
       "Uretamendi",
       "Betolaza",
     ],

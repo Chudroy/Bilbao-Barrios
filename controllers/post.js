@@ -13,6 +13,11 @@ module.exports.index = async function (req, res, next) {
   }
 };
 
+module.exports.filterPosts = async function (req, res, next) {
+  console.log(req.body);
+  res.redirect("/");
+};
+
 module.exports.renderNewForm = function (req, res, next) {
   res.render("post/new");
 };

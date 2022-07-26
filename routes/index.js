@@ -6,4 +6,6 @@ const post = require("../controllers/post");
 /* GET home page. */
 router.get("/", post.index);
 
+router.post("/", post.filterPosts);
+
 module.exports = router;
