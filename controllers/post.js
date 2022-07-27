@@ -7,7 +7,7 @@ const dateTime = require("./dateTime");
 module.exports.index = catchAsync(async function (req, res, next) {
   try {
     const posts = await Post.find({}).populate("author");
-    res.render("index", { posts });
+    res.render("index", { posts, checkedNbs: [] });
   } catch (e) {
     console.log("index error", e);
   }
@@ -15,14 +15,16 @@ module.exports.index = catchAsync(async function (req, res, next) {
 
 module.exports.filterPosts = catchAsync(async function (req, res, next) {
   console.log(req.body.neighbourhoods);
+
   if (!req.body.neighbourhoods) {
     return res.redirect("/");
   }
+
   const posts = await Post.find({
     neighbourhood: { $in: req.body.neighbourhoods },
   }).populate("author");
 
-  res.render("index", { posts });
+  res.render("index", { posts, checkedNbs: req.body.neighbourhoods });
 });
 
 module.exports.renderNewForm = function (req, res, next) {

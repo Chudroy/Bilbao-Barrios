@@ -1,0 +1,25 @@
+<div class="accordion-body">
+  <ul class="list-group list-group-flush">
+    <% for( let j = 0; j < neighbourhood.neighbourhoods.length; j++ ) { %>
+    <li class="list-group-item p-0">
+      <div class="form-check p-0">
+        <label
+          class="form-check-label d-flex justify-content-between"
+          for="neighbourhood"
+        >
+          <%= neighbourhood.neighbourhoods[j]%>
+          <input
+            class="form-check-input nbCheckbox<%=index%>"
+            type="checkbox"
+            value="<%=neighbourhood.neighbourhoods[j]%>"
+            id=""
+            name="neighbourhoods[]"
+            <%if (checkedNbs.includes(neighbourhood.neighbourhoods[j])){ %>
+            checked 
+          <% } %>>
+        </label>
+      </div>
+    </li>
+    <% } %>
+  </ul>
+</div>
