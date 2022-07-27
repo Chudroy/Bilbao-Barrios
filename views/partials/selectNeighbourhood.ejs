@@ -1,0 +1,39 @@
+<div class="mb-3 row">
+  <div class="col-sm-6 mb-3">
+    <label class="visually-hidden" for="district-select">Distrito</label>
+    <select
+      class="form-select validated-form"
+      novalidate
+      name="post[district]"
+      id="district-select"
+      required
+    >
+      <option value="" selected disabled>Elige un distrito</option>
+      <% for( let index = 0; index < neighbourhoods.length; index++ ) { %>
+      <option
+        name="district"
+        value="<%=neighbourhoods[index].district %>"
+        id="district<%=[index]%>"
+      >
+        <%=neighbourhoods[index].district %>
+      </option>
+      <% } %>
+    </select>
+    <div class="invalid-feedback">Porfavor elige un distrito.</div>
+  </div>
+
+  <div class="col-sm-6 mb-3">
+    <label class="visually-hidden" for="neighbourhood-select">Barrio</label>
+    <select
+      class="form-select validated-form"
+      novalidate
+      name="post[neighbourhood]"
+      id="neighbourhood-select"
+      disabled
+      required
+    >
+      <option value="" selected disabled>Elige un barrio</option>
+    </select>
+    <div class="invalid-feedback">Porfavor elige un barrio.</div>
+  </div>
+</div>

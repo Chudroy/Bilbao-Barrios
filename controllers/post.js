@@ -4,19 +4,26 @@ const ExpressError = require("../utils/expressError");
 const cloudinary = require("cloudinary");
 const dateTime = require("./dateTime");
 
-module.exports.index = async function (req, res, next) {
+module.exports.index = catchAsync(async function (req, res, next) {
   try {
     const posts = await Post.find({}).populate("author");
-    res.render("index", { title: "Homepage", posts });
+    res.render("index", { posts });
   } catch (e) {
     console.log("index error", e);
   }
-};
+});
 
-module.exports.filterPosts = async function (req, res, next) {
-  console.log(req.body);
-  res.redirect("/");
-};
+module.exports.filterPosts = catchAsync(async function (req, res, next) {
+  console.log(req.body.neighbourhoods);
+  if (!req.body.neighbourhoods) {
+    return res.redirect("/");
+  }
+  const posts = await Post.find({
+    neighbourhood: { $in: req.body.neighbourhoods },
+  }).populate("author");
+
+  res.render("index", { posts });
+});
 
 module.exports.renderNewForm = function (req, res, next) {
   res.render("post/new");
@@ -54,14 +61,23 @@ module.exports.renderPost = catchAsync(async function (req, res, next) {
 module.exports.createNewPost = catchAsync(async function (req, res, next) {
   if (!req.body.post) throw new ExpressError("Invalid Post Data", 400);
 
-  let newPost = new Post(req.body.post);
-  newPost.date = Date.now();
-  newPost.author = req.user._id;
+  console.log(req.body);
+  let newPost = new Post({
+    ...req.body.post,
+    date: Date.now(),
+    author: req.user._id,
+  });
+  // newPost.date = Date.now();
+  // newPost.author = req.user._id;
+  // newPost.district = districtSelect;
+  // newPost.neighbourhood = neighourhoodSelect;
+
   if (req.file) {
     newPost.image = { url: req.file.path, filename: req.file.filename };
   }
 
   await newPost.save();
+  console.log(newPost);
   req.flash("success", "Succesfully made a new post");
   res.redirect(`/post/${newPost._id}`);
 });

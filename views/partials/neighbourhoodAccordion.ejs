@@ -50,9 +50,9 @@
                       <input
                         class="form-check-input nbCheckbox<%=index%>"
                         type="checkbox"
-                        value=""
+                        value="<%=neighbourhoods[index].neighbourhoods[j]%>"
                         id=""
-                        name="<%=neighbourhoods[index].neighbourhoods[j]%>"
+                        name="neighbourhoods[]"
                       />
                     </label>
                   </div>
@@ -64,7 +64,11 @@
         </div>
         <% } %>
         <div class="mt-3 text-center">
-          <button type="submit" class="btn btn-bilbaotheme text-light">
+          <button
+            type="submit"
+            class="btn btn-bilbaotheme text-light"
+            id="nbSearch"
+          >
             Search
           </button>
         </div>

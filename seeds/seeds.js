@@ -4,10 +4,13 @@ const Post = require("../models/post");
 const fake_title = require("./fake_titles");
 
 mongoose
-  .connect("mongodb://localhost:27017/BilbaoBarrios", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://Chudroy:ggXMdTH6rPOOt5Ip@cluster0.wmqob.mongodb.net/?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Connected to mongoose");
   })
@@ -30,7 +33,7 @@ const seedDB = async () => {
 
       const p = new Post({
         title: `${fake_title.first_word[random_first_word]} ${fake_title.second_word[random_second_word]}`,
-        author: "62c98bbae22ead5d65639eca",
+        author: "62d6c797547c885ad6fc0cf2",
         content:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacus ligula, facilisis nec augue id, vulputate placerat turpis. Nullam auctor ante quam, eget efficitur leo tempus id. Suspendisse et venenatis sapien, eget faucibus leo. Nunc posuere tincidunt tellus eget dapibus. Vivamus nec ornare turpis. Maecenas maximus dapibus metus eget dictum. Aliquam erat volutpat. In eu dui ultricies magna congue venenatis. Vivamus tempor efficitur libero a facilisis. Curabitur id mi vulputate, pretium tellus at, lacinia nisl. Etiam pharetra facilisis orci eu venenatis. Curabitur et neque euismod, sollicitudin eros in, auctor nisi. Mauris sit amet egestas magna. Mauris nibh sem, aliquet vel lectus nec, faucibus condimentum mi. Fusce sed lectus libero.",
         image: {
@@ -38,6 +41,8 @@ const seedDB = async () => {
           filename: "BilbaoBarrios/lymkhpoykawwu1xqjwt6",
         },
         date: Date.now(),
+        district: "Abando",
+        neighbourhood: "Abandoibarra",
       });
 
       await p.save();

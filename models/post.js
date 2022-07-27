@@ -34,6 +34,14 @@ const PostSchema = new Schema({
   image: ImageSchema,
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
   likes: Number,
+  district: {
+    type: String,
+    required: true,
+  },
+  neighbourhood: {
+    type: String,
+    required: true,
+  },
 });
 
 PostSchema.virtual("timeSincePost").get(function () {

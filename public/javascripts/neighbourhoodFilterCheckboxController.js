@@ -1,6 +1,4 @@
-(function () {
-  "use strict";
-
+const checkboxFuncionality = function () {
   const checkboxCollections = [];
 
   for (let i = 0; i < 8; i++) {
@@ -19,7 +17,6 @@
           );
           for (let subBox of subBoxes) {
             subBox.checked = true;
-            subBox.value = true;
           }
           for (let siblingBox of siblingBoxes) {
             siblingBox.checked = true;
@@ -31,7 +28,6 @@
           );
           for (let subBox of subBoxes) {
             subBox.checked = false;
-            subBox.value = false;
           }
           for (let siblingBox of siblingBoxes) {
             siblingBox.checked = false;
@@ -40,5 +36,14 @@
       });
     }
   }
-  console.log(checkboxCollections);
+};
+
+const searchFunctionality = function () {
+  const searchButton = document.getElementById("nbSearch");
+};
+// Execute
+(function () {
+  "use strict";
+  checkboxFuncionality();
+  searchFunctionality();
 })();

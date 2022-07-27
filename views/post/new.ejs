@@ -3,7 +3,7 @@
   class="container-fluid d-flex justify-content-center align-items-center mt-5"
 >
   <div class="row">
-    <h1 class="text-center mb-4">New Post</h1>
+    <h1 class="text-center mb-4">Nuevo Post</h1>
     <div class="col-md-12">
       <div class="card shadow">
         <div class="card-body">
@@ -15,7 +15,7 @@
             enctype="multipart/form-data"
           >
             <div class="mb-3">
-              <label class="form-label" for="title">Title</label>
+              <label class="form-label" for="title">Título</label>
               <input
                 class="form-control"
                 type="text"
@@ -23,7 +23,7 @@
                 id="title"
                 required
               />
-              <div class="invalid-feedback">Please write a title.</div>
+              <div class="invalid-feedback">Porfavor escribe un título.</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="">Post</label>
@@ -34,8 +34,11 @@
                 id="post"
                 required
               ></textarea>
-              <div class="invalid-feedback">Please write a post.</div>
+              <div class="invalid-feedback">Porfavor escribe un post.</div>
             </div>
+            <!-- Neighbourhoood Select -->
+            <%- include("../partials/selectNeighbourhood")%>
+            <!-- Neighbourhoood Select -->
             <div class="mb-3">
               <label for="image" class="form-label">Image</label>
               <input class="form-control" type="file" name="image" id="image" />
@@ -53,3 +56,6 @@
     </div>
   </div>
 </div>
+
+<script src="/javascripts/neighbourhoods.js"></script>
+<script src="/javascripts/neighbourhoodSelectBox.js"></script>
