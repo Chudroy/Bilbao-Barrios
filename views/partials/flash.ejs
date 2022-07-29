@@ -1,5 +1,21 @@
+<div class="row d-flex flex-column justify-content-center align-items-center">
+<!-- Frontend Controlled Flash -->
+  <div id="live-flash" class="col-md-6 d-none"> 
+    <div 
+    class="alert alert-success alert-dismissible fade show" 
+    role="alert">
+       <span></span>
+      <button
+        id="close-live-flash"
+        type="button"
+        class="btn-close"
+      ></button>
+    </div>
+  </div>
+
+<!-- Backend Controlled Flash -->
 <% if(flash.success && flash.success.length > 0){ %>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="col-md-6 alert alert-success alert-dismissible fade show" role="alert">
   <%= flash.success %>
   <button
     type="button"
@@ -9,7 +25,7 @@
   ></button>
 </div>
 <% } %> <% if(flash.error && flash.error.length > 0){ %>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="col-md-6 alert alert-danger alert-dismissible fade show" role="alert">
   <%=flash.error %>
   <button
     type="button"
@@ -19,3 +35,4 @@
   ></button>
 </div>
 <% } %>
+</div>

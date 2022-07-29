@@ -16,10 +16,13 @@
     <label class="form-check-label" for="district">
       <input
         class="form-check-input districtCheckbox<%=index%>"
+        name="districts[]"
         type="checkbox"
-        value=""
-        id=""
-      />
+        value="<%=neighbourhood.district%>"
+        <%if (checkedDistricts.includes(neighbourhood.district)){ %>
+          checked 
+        <% } %>
+      >
     </label>
   </div>
 </div>

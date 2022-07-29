@@ -2,28 +2,36 @@
   <p class="card-text text-secondary me-3">
     <i class="bilbao-icon fa-solid fa-message fa-lg"></i> <%= post.replyNumber
     %>
-    <span class="d-none d-md-inline"
+    <span class="d-none d-lg-inline"
       >Comentario<%= post.replyNumber === 1 ? "" : "s" %>
     </span>
   </p>
-  <p class="card-text text-secondary me-3">
-    <i class="bilbao-icon fa-solid fa-share-nodes fa-xl"></i>
-    <span class="d-none d-md-inline">Compartir</span>
+  <p class="card-text me-3" id="copy-link">
+    <a href="#" class="text-decoration-none text-secondary">   
+      <i class="bilbao-icon fa-solid fa-share-nodes fa-xl"></i>
+      <span class="d-none d-lg-inline" >Compartir</span></a>
   </p>
   <p class="card-text text-secondary me-3">
     <i class="bilbao-icon fa-solid fa-bookmark fa-lg"></i>
-    <span class="d-none d-md-inline">Guardar</span>
+    <span class="d-none d-lg-inline">Guardar</span>
   </p>
   <p class="card-text text-secondary me-3">
     <!-- <i class="bilbao-icon fa-solid fa-ellipsis"></i> -->
     <%- include("./cardPostDropdown", {post}) %>
   </p>
   <div class="d-flex ms-auto">
-    <p class="card-text text-secondary me-1">
+    <p id ="thumbs-up"  class="card-text text-secondary me-1">
       <i class="bilbao-green fa-solid fa-thumbs-up fa-xl"></i>
     </p>
-    <p class="card-text text-secondary me-3">
+    <p id ="thumbs-down" class="card-text text-secondary me-3">
       <i class="bilbao-red fa-solid fa-thumbs-down fa-xl"></i>
+    </p>
+    <p id = "post-likes-container" class="card-text text-secondary me-3">
+      <span id="<%=post._id%>">   
+        <%= post.likes %> 
+      </span>
     </p>
   </div>
 </div>
+
+

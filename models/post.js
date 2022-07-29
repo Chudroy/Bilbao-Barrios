@@ -33,7 +33,20 @@ const PostSchema = new Schema({
   },
   image: ImageSchema,
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
-  likes: Number,
+
+  likes: {
+    type: Number,
+    default: 0,
+  },
+
+  likedByUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      unique: true,
+    },
+  ],
+
   district: {
     type: String,
     required: true,

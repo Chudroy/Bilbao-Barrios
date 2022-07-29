@@ -30,6 +30,7 @@ const upload = multer({
   },
 });
 
+// Nested Reply Router
 router.use("/:id/replies", replyRouter);
 
 // GET post form
@@ -61,5 +62,8 @@ router
   )
   // DELETE the post
   .delete(isLoggedIn, isAuthor, post.deletePost);
+
+// Update Post Likes
+router.post("/updateLikes", post.updateLikes);
 
 module.exports = router;

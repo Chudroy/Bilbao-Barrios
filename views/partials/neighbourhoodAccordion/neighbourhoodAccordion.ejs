@@ -5,13 +5,13 @@
       <form action="/" method="POST">
         <% for( let index = 0; index < neighbourhoods.length; index++ ) { %>
         <div class="accordion-item">
-          <%- include("./nbHeader", {index, neighbourhood :neighbourhoods[index] })%>
+          <%- include("./nbHeader", {index, neighbourhood: neighbourhoods[index], checkedDistricts })%>
           <div
             id="flush-collapse<%=index%>"
             class="accordion-collapse collapse"
             aria-labelledby="flush-heading<%=index%>"
           >
-            <%- include("./nbBody", {index, neighbourhood :neighbourhoods[index], checkedNbs})%>
+            <%- include("./nbBody", {index, neighbourhood: neighbourhoods[index], checkedNbs})%>
           </div>
         </div>
         <% } %>

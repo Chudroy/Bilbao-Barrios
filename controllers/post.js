@@ -7,15 +7,13 @@ const dateTime = require("./dateTime");
 module.exports.index = catchAsync(async function (req, res, next) {
   try {
     const posts = await Post.find({}).populate("author");
-    res.render("index", { posts, checkedNbs: [] });
+    res.render("index", { posts });
   } catch (e) {
     console.log("index error", e);
   }
 });
 
 module.exports.filterPosts = catchAsync(async function (req, res, next) {
-  console.log(req.body.neighbourhoods);
-
   if (!req.body.neighbourhoods) {
     return res.redirect("/");
   }
@@ -24,7 +22,11 @@ module.exports.filterPosts = catchAsync(async function (req, res, next) {
     neighbourhood: { $in: req.body.neighbourhoods },
   }).populate("author");
 
-  res.render("index", { posts, checkedNbs: req.body.neighbourhoods });
+  res.render("index", {
+    posts,
+    checkedNbs: req.body.neighbourhoods,
+    checkedDistricts: req.body.districts,
+  });
 });
 
 module.exports.renderNewForm = function (req, res, next) {
@@ -122,4 +124,31 @@ module.exports.deletePost = catchAsync(async (req, res) => {
 
   req.flash("success", "successfully deleted post");
   res.redirect("/");
+});
+
+module.exports.updateLikes = catchAsync(async (req, res) => {
+  console.log("reached the route");
+  console.log(req.body);
+  try {
+    const postID = req.body.post_id;
+    const post = await Post.find({
+      _id: postID,
+      likedByUsers: { $in: [req.user._id] },
+    });
+
+    if (Object.keys(post).length === 0) {
+      const updatePost = await Post.findByIdAndUpdate(
+        postID,
+        { likes: req.body.likes, $push: { likedByUsers: req.user._id } },
+        {
+          useFindAndModify: false,
+          runValidators: true,
+        }
+      );
+    } else {
+      res.sendStatus(403);
+    }
+  } catch (e) {
+    console.log("update likes error", e);
+  }
 });

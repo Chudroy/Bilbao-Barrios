@@ -153,6 +153,8 @@ app.use(async (req, res, next) => {
 const { neighbourhoods } = require("./private/javascripts/neighbourhoods.js");
 
 app.use(async (req, res, next) => {
+  res.locals.checkedDistricts = [];
+  res.locals.checkedNbs = []
   res.locals.neighbourhoods = neighbourhoods;
   next();
 });
