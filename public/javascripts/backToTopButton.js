@@ -1,12 +1,12 @@
 function scrollFunction(toTopButton) {
   if (document.documentElement.scrollTop < 1000) {
-    toTopButton.classList.remove("d-sm-inline");
+    toTopButton.classList.add("d-none");
     return;
   }
   if (this.oldScroll > this.scrollY) {
-    toTopButton.classList.add("d-sm-inline");
+    toTopButton.classList.remove("d-none");
   } else {
-    toTopButton.classList.remove("d-sm-inline");
+    toTopButton.classList.add("d-none");
   }
   this.oldScroll = this.scrollY;
 }
