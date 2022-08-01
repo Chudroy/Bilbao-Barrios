@@ -1,7 +1,5 @@
 function scrollFunction(toTopButton) {
-  console.log(document.documentElement.scrollTop);
   if (document.documentElement.scrollTop < 1000) {
-    console.log("disable");
     toTopButton.classList.remove("d-sm-inline");
     return;
   }
