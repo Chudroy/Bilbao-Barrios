@@ -4,6 +4,7 @@
 
   // Get Share Icon
   const copyLink = document.getElementById("copy-link");
+  if (!copyLink) return;
 
   copyLink.addEventListener("click", () => {
     navigator.clipboard.writeText(window.location.href);

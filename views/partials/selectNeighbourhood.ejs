@@ -14,6 +14,9 @@
         name="district"
         value="<%=neighbourhoods[index].district %>"
         id="district<%=[index]%>"
+        <% if (post != undefined && neighbourhoods[index].district === post.district) { %>
+         selected
+        <% } %>
       >
         <%=neighbourhoods[index].district %>
       </option>
@@ -31,8 +34,12 @@
       id="neighbourhood-select"
       disabled
       required
-    >
-      <option value="" selected disabled>Elige un barrio</option>
+    ><% if (post) { %>
+      <option name = "neighbourhood" value="<%= post.neighbourhood %>" selected ><%= post.neighbourhood %> </option>
+    <% }  else { %>
+      <option  value="" selected disabled>Elige un barrio</option>
+      <% } %>
+     
     </select>
     <div class="invalid-feedback">Porfavor elige un barrio.</div>
   </div>

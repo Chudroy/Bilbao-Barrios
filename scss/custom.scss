@@ -61,4 +61,10 @@ $theme-colors: map-merge($custom-theme-colors, $theme-colors);
     height: 6px;
     vertical-align: middle;
   }
+
+  #back-to-top-button {
+    position: fixed;
+    z-index: 99;
+    cursor: pointer;
+  }
  

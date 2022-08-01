@@ -19,17 +19,15 @@
     <!-- <i class="bilbao-icon fa-solid fa-ellipsis"></i> -->
     <%- include("./cardPostDropdown", {post}) %>
   </p>
-  <div class="d-flex ms-auto">
+  <div class="post-likes-container d-flex ms-auto">
     <p id ="thumbs-up"  class="card-text text-secondary me-1">
       <i class="bilbao-green fa-solid fa-thumbs-up fa-xl"></i>
     </p>
     <p id ="thumbs-down" class="card-text text-secondary me-3">
       <i class="bilbao-red fa-solid fa-thumbs-down fa-xl"></i>
     </p>
-    <p id = "post-likes-container" class="card-text text-secondary me-3">
-      <span id="<%=post._id%>">   
-        <%= post.likes %> 
-      </span>
+    <p id="<%=post._id%>" class="post-id-container card-text text-secondary me-3">
+        <%= post.likes %>   
     </p>
   </div>
 </div>

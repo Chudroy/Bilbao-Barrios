@@ -35,28 +35,43 @@ function updatePage(e, currentLikes, postIDContainer) {
 (function () {
   "use strict";
   // post container
-  const postContainer = document.getElementById("post-likes-container");
-  const postIDContainer = postContainer.getElementsByTagName("*")[0];
-  // icons
-  const thumbsUp = document.getElementById("thumbs-up");
-  const thumbsDown = document.getElementById("thumbs-down");
+  const postContainers = document.getElementsByClassName(
+    "post-likes-container"
+  );
+  if (!postContainers) {
+    return;
+  }
 
-  thumbsUp.addEventListener("click", function () {
-    let currentLikes = parseInt(postContainer.innerText);
-    let like = 1;
-    currentLikes += like;
-    sendLikesToServer("/post/updateLikes", currentLikes, postIDContainer, like);
-  });
+  for (let postContainer of postContainers) {
+    let postIDContainer =
+      postContainer.getElementsByClassName("post-id-container")[0];
 
-  thumbsDown.addEventListener("click", function () {
-    let currentLikes = parseInt(postContainer.innerText);
-    let dislike = -1;
-    currentLikes += dislike;
-    sendLikesToServer(
-      "/post/updateLikes",
-      currentLikes,
-      postIDContainer,
-      dislike
-    );
-  });
+    // icons
+    const thumbsUp = postContainer.querySelector("#thumbs-up");
+    const thumbsDown = postContainer.querySelector("#thumbs-down");
+
+    thumbsUp.addEventListener("click", function () {
+      let currentLikes = parseInt(postContainer.innerText);
+      let like = 1;
+      currentLikes += like;
+      sendLikesToServer(
+        "/post/updateLikes",
+        currentLikes,
+        postIDContainer,
+        like
+      );
+    });
+
+    thumbsDown.addEventListener("click", function () {
+      let currentLikes = parseInt(postContainer.innerText);
+      let dislike = -1;
+      currentLikes += dislike;
+      sendLikesToServer(
+        "/post/updateLikes",
+        currentLikes,
+        postIDContainer,
+        dislike
+      );
+    });
+  }
 })();
