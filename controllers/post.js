@@ -82,7 +82,7 @@ module.exports.createNewPost = catchAsync(async function (req, res, next) {
 
   await newPost.save();
   console.log(newPost);
-  req.flash("success", "Succesfully made a new post");
+  req.flash("success", "Post Creado");
   res.redirect(`/post/${newPost._id}`);
 });
 
@@ -122,32 +122,98 @@ module.exports.deletePost = catchAsync(async (req, res) => {
     cloudinary.v2.uploader.destroy(deletedPost.image.filename);
   }
 
-  req.flash("success", "successfully deleted post");
+  req.flash("success", "Post Borrado");
   res.redirect("/");
 });
 
 module.exports.updateLikes = catchAsync(async (req, res) => {
-  console.log("reached the route");
   console.log(req.body);
   try {
+    if (!req.user) {
+      return res.status(403).send("Debe iniciar sesión primero");
+    }
+
     const postID = req.body.post_id;
-    const post = await Post.find({
+
+    //see if post has been liked
+    const likedPost = await Post.find({
       _id: postID,
       likedByUsers: { $in: [req.user._id] },
-    });
+    }).lean();
 
-    if (Object.keys(post).length === 0) {
+    //see if post has been disliked
+    const dislikedPost = await Post.find({
+      _id: postID,
+      dislikedByUsers: { $in: [req.user._id] },
+    }).lean();
+
+    if (
+      Object.keys(likedPost).length > 1 ||
+      Object.keys(dislikedPost).length > 1
+    ) {
+      console.log("user has liked / disliked this post more than once");
+    }
+
+    if (
+      Object.keys(likedPost).length === 0 &&
+      Object.keys(dislikedPost).length === 0
+    ) {
+      console.log("hasn't been liked");
+      if (req.body.vote == 1) {
+        const updatePost = await Post.findByIdAndUpdate(
+          postID,
+          { likes: req.body.likes, $push: { likedByUsers: req.user._id } },
+          {
+            useFindAndModify: false,
+            runValidators: true,
+          }
+        );
+      } else if (req.body.vote == -1) {
+        const updatePost = await Post.findByIdAndUpdate(
+          postID,
+          { likes: req.body.likes, $push: { dislikedByUsers: req.user._id } },
+          {
+            useFindAndModify: false,
+            runValidators: true,
+          }
+        );
+      }
+    }
+    //post is already liked
+    else if (Object.keys(likedPost).length >= 1) {
+      if (parseInt(req.body.vote) === 1) {
+        return res.status(403).send("Ya has dado like a este post");
+      }
       const updatePost = await Post.findByIdAndUpdate(
         postID,
-        { likes: req.body.likes, $push: { likedByUsers: req.user._id } },
+        {
+          likes: req.body.likes,
+          $pull: { likedByUsers: req.user._id },
+        },
         {
           useFindAndModify: false,
           runValidators: true,
         }
       );
-    } else {
-      res.sendStatus(403);
+      //post is already disliked
+    } else if (Object.keys(dislikedPost).length >= 1) {
+      if (parseInt(req.body.vote) === -1) {
+        return res.status(403).send("Ya has dado dislike a este post");
+      }
+      const updatePost = await Post.findByIdAndUpdate(
+        postID,
+        {
+          likes: req.body.likes,
+          $pull: { dislikedByUsers: req.user._id },
+        },
+        {
+          useFindAndModify: false,
+          runValidators: true,
+        }
+      );
     }
+
+    return res.status(200).send("Success");
   } catch (e) {
     console.log("update likes error", e);
   }

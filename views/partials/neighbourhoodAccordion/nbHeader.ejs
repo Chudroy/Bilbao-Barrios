@@ -19,7 +19,7 @@
         name="districts[]"
         type="checkbox"
         value="<%=neighbourhood.district%>"
-        <%if (checkedDistricts.includes(neighbourhood.district)){ %>
+        <%if (checkedDistricts && checkedDistricts.includes(neighbourhood.district)){ %>
           checked 
         <% } %>
       >

@@ -36,7 +36,7 @@ module.exports.createReply = catchAsync(async function (req, res, next) {
   await post.save();
 
   // Redirect to post
-  req.flash("success", "successfully posted comment");
+  req.flash("success", "comentario creado");
   res.redirect(`/post/${id}`);
 });
 
@@ -72,6 +72,6 @@ module.exports.deleteReply = catchAsync(async (req, res, next) => {
   await originalPost.save();
 
   // Redirect to post
-  req.flash("success", "successfully deleted comment");
+  req.flash("success", "comentario borrado");
   res.redirect(`/post/${id}`);
 });

@@ -47,6 +47,14 @@ const PostSchema = new Schema({
     },
   ],
 
+  dislikedByUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      unique: true,
+    },
+  ],
+
   district: {
     type: String,
     required: true,

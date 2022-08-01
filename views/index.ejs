@@ -19,18 +19,22 @@
         <div class="card-body">
           <%- include("partials/card/cardHeader", {post: posts[index]}) %>
           <!-- Image Partial -->
+          <a href="post/<%=posts[index]._id%> " class="text-decoration-none text-black">  
           <%- include("partials/card/cardImage", {post:posts[index] }) %>
-          <a href="post/<%=posts[index]._id%> " class=""></a>
-          <h3 class="card-title mb-3"><%= posts[index].title %></h3>
+            <h3 class="card-title mb-3"><%= posts[index].title %></h3>
+          </a>
           <%- include("partials/card/cardFooter", {post: posts[index]}) %>
         </div>
         <% } else { %>
         <!-- card with no image -->
         <div class="card-body">
           <%- include("partials/card/cardHeader", {post: posts[index]}) %>
-          <h3 class="card-title"><%= posts[index].title %></h3>
-          <p class="card-text"><%=posts[index].content%></p>
-          <a href="post/<%=posts[index]._id%> " class="stretched-link"></a>
+          <div class="mb-3">
+            <a href="post/<%=posts[index]._id%> " class=" text-decoration-none text-black">
+              <h3 class="card-title"><%= posts[index].title %></h3>
+              <p class="card-text"><%=posts[index].content%></p>
+            </a>
+          </div>
           <%- include("partials/card/cardFooter", {post: posts[index]}) %>
         </div>
         <% } %>
