@@ -1,7 +1,17 @@
 # Bilbao-Barrios
-A forum in which the boards are based on neighbourhoods
+
+A forum dedicated to the neighbourhoods of central Bilbao
 
 [Link to the active website on Heroku](https://bilbao-barrios.herokuapp.com/).
+
+## How to Use
+
+1. Register a user
+2. Create a post and associate the post to a neighbourhood and district. Images are optional.
+4. Search for posts you are interested in with the neighbourhood post filter. If you select none, no filter will be applied and posts from all neighbourhoods will be included. 
+5. Posts can be commented on, also.
+
+## Key features
 
 ### MVC (Model, View, Controller) Project Structure
 
