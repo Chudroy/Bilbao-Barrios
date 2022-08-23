@@ -6,7 +6,7 @@ A forum dedicated to the neighbourhoods of central Bilbao
 
 ## How to Use
 
-1. Register a user
+1. Register a user.
 2. Create a post and associate the post to a neighbourhood and district. Images are optional.
 4. Search for posts you are interested in with the neighbourhood post filter. If you select none, no filter will be applied and posts from all neighbourhoods will be included. 
 5. Posts can be commented on, also.
@@ -19,7 +19,7 @@ The data models, views and functionality are separated in the project folder str
 
 ###  CRUD for posts with images and comments
 
-Create, Read, Update, Delete functionality, with available permissions according to current User
+Create, Read, Update, Delete functionality, with available permissions according to current User.
 
 ### Errors and Async Error handling with friendly error messages
 
