@@ -29,12 +29,22 @@ Posts and comments can be liked or disliked, once, by each user. In the database
 
 ### Image upload with Multer and Cloudinary
 
-Multer middleware for 
+Multer middleware for multipart/form-data POST requests. This middleware connects with Cloudinary storage API to upload and save images to their database. This avoids the overhead of storing images in the server database, instead only saving a URL string that links to the image stored on Cloudinary's side.
 
 ### Environment variables with dotenv
 
-### Content Security Policy with HelmetJS
+Environment variables are used to safely upload the project to Github without exposing sensitive developre credentials. To recreate this website on your own machine, create a .env file that matches any process.ENV.{{VARIABLE_NAMES}} found in the project. These are:
 
-### Prevention of Database Injection and XSS (Cross Site Scripting) with HelmetJS
+- CLOUDINARY_CLOUD_NAME
+- CLOUDINARY_KEY
+- CLOUDINARY_SECRET
+- DB_URL
+- SECRET
+
+### Content Security Policy, Prevention of Database Injection and XSS (Cross Site Scripting) with HelmetJS
+
+Content security policy to prevent loading resources from unspecified URLs, thus preventing common security exploits such as XSS.
 
 ### Mongo Cloud Database with Mongo Atlas
+
+Cloud based database, eases development process. No need to switch to local db in development.
